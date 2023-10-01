@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head}"></head>
+
+<body>
+
+<header th:replace="~{fragments/header}"></header>
+
+<main class="main">
+
+    <div class="box register">
+
+        <h2 class="h2_register">Login</h2>
+
+        <!-- Login form start-->
+        <form class="form"
+              th:method="post"
+              th:action="@{/auth/login}"
+              th:object="${loginRequest}">
+
+            <label th:for="email">First Name</label>
+            <input type="text"
+                   th:field="*{email}"
+                   th:class="${#fields.hasErrors('email')} ? fieldError"
+                   placeholder="Email"/>
+            <p class="errors alert alert-danger">
+                Email is required.
+            </p>
+
+            <label th:for="password">Last Name</label>
+            <input type="password"
+                   th:field="*{password}"
+                   class=""
+                   placeholder="Password"/>
+            <p class="errors alert alert-danger">
+                 Password is required.
+            </p>
+
+            <div class="row">
+
+                <div class="button-holder d-flex">
+                    <input type="submit" class="" value="Register"/>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+</main>
+</body>
+</html>

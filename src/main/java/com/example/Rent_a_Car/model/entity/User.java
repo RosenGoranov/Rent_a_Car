@@ -15,8 +15,8 @@ public class User extends BasePerson {
     private boolean isAccountNonLocked;
 
 
-    public User user() {
-        return this;
+    public User () {
+
     }
 
     public User(boolean isAccountNonExpired, boolean isAccountNonLocked) {

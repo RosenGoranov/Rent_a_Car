@@ -31,7 +31,7 @@ public class BasePerson {
     private Address address;
 
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST )
     @JoinColumn(nullable = false)
     private Role role;
 

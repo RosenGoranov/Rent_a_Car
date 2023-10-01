@@ -45,16 +45,14 @@ public class UserService {
         if (optionalUser.isPresent()) {
             return false;
         }
-        Optional<Address> address = this.addressService.getAddress(
+        Address address = this.addressService.getAddress(
                 userDTO.getAddressDTO().getTown(),
                 userDTO.getAddressDTO().getStreet(),
                 userDTO.getAddressDTO().getNumber());
-        if (address.isEmpty()) {
-            this.addressService.getAddressTown(userDTO.getAddressDTO().getTown());
-        }
+
         ModelMapper modelMapper = new ModelMapper();
         User user = modelMapper.map(userDTO, User.class);
-
+        user.setAddress(address);
         this.userRepository.save(user);
         return true;
     }

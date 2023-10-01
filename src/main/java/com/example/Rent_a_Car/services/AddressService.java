@@ -2,7 +2,11 @@ package com.example.Rent_a_Car.services;
 
 
 import com.example.Rent_a_Car.model.entity.Address;
+import com.example.Rent_a_Car.model.entity.Street;
+import com.example.Rent_a_Car.model.entity.Town;
 import com.example.Rent_a_Car.repository.AddressRepository;
+import com.example.Rent_a_Car.repository.StreetRepository;
+import com.example.Rent_a_Car.repository.TownRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -12,29 +16,29 @@ public class AddressService {
 
     private final AddressRepository addressRepository;
 
-    public AddressService(AddressRepository addressRepository) {
+    private final TownRepository townRepository;
+
+    private final StreetRepository streetRepository;
+
+    public AddressService(AddressRepository addressRepository, TownRepository townRepository, StreetRepository streetRepository) {
         this.addressRepository = addressRepository;
+        this.townRepository = townRepository;
+        this.streetRepository = streetRepository;
     }
 
-    public Optional<Address> getAddress(String town, String street, String number) {
-        return this.addressRepository.findByTownNameAndStreetNameAndNumber(town, street, number);
-    }
+    public Address getAddress(String town, String street, String number) {
 
-    public String getAddressTown(String town) {
-        Optional<Address> byTown = this.addressRepository.findByTownName(town);
-        if (byTown.isEmpty()){
-            return town;
-        }
-        return byTown.get().getTown().getName();
-    }
-
-    public String getAddressStreet(String street) {
-        Optional<Address> byTown = this.addressRepository.findByStreetName(street);
-        if (byTown.isEmpty()){
-            return street;
-        }
-        return byTown.get().getStreet().getName();
+        return this.addressRepository
+                .findByTownNameAndStreetNameAndNumber(town, street, number)
+                .orElse(new Address(
+                        this.townRepository.findByName(town).orElse(new Town().setName(town)),
+                        this.streetRepository.findByName(street).orElse(new Street().setName(street)),
+                        number
+                ));
     }
 
 
 }
+
+
+
