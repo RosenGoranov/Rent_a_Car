@@ -10,17 +10,17 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
     private Town town;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
     private Street street;
 
     @Column(nullable = false)
     private String number;
 
 
-    private Address() {
+    public Address() {
 
     }
 
