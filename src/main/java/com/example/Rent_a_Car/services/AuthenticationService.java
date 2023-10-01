@@ -51,8 +51,7 @@ public class AuthenticationService {
         }
 
 
-        //TODO delete if below method works
-        //var userDTO = buildUserDTO(request, role);
+
         UserDTO userDTO = buildUserDTO(request,role);
         userDTO.setRole(role);
         userService.save(userDTO);

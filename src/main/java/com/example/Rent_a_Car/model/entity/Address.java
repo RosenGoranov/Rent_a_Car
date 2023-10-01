@@ -10,11 +10,11 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
-    private String town;
+    @ManyToOne
+    private Town town;
 
-    @Column(nullable = false)
-    private String street;
+    @ManyToOne
+    private Street street;
 
     @Column(nullable = false)
     private String number;
@@ -25,7 +25,7 @@ public class Address {
     }
 
 
-    public Address(String town, String street, String number) {
+    public Address(Town town, Street street, String number) {
         this();
         this.town = town;
         this.street = street;
@@ -40,25 +40,22 @@ public class Address {
         return id;
     }
 
-    public Address setId(long id) {
-        this.id = id;
-        return this;
-    }
 
-    public String getTown() {
+
+    public Town getTown() {
         return town;
     }
 
-    public Address setTown(String town) {
+    public Address setTown(Town town) {
         this.town = town;
         return this;
     }
 
-    public String getStreet() {
+    public Street getStreet() {
         return street;
     }
 
-    public Address setStreet(String street) {
+    public Address setStreet(Street street) {
         this.street = street;
         return this;
     }

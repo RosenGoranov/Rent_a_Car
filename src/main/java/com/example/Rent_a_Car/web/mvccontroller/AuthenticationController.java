@@ -1,7 +1,9 @@
 package com.example.Rent_a_Car.web.mvccontroller;
 
+import com.example.Rent_a_Car.model.auth.AuthenticationResponse;
 import com.example.Rent_a_Car.model.auth.RegisterRequest;
 import com.example.Rent_a_Car.model.dto.AddressDTO;
+import com.example.Rent_a_Car.services.AuthenticationService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -17,6 +19,15 @@ import java.security.Principal;
 @RequestMapping("/auth")
 public class AuthenticationController {
 
+    private static final String SPRING_ATTRIBUTE_REQUEST = "org.springframework.validation.BindingResult.registerRequest";
+    private static final String SPRING_ATTRIBUTE_ADDRESS = "org.springframework.validation.BindingResult.address";
+
+    private final AuthenticationService authenticationService;
+
+    public AuthenticationController(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
+    }
+
 
     @ModelAttribute(name = "registerRequest")
     public RegisterRequest initRequest() {
@@ -29,7 +40,7 @@ public class AuthenticationController {
     }
 
     @ModelAttribute(name = "address")
-    public AddressDTO initAddress(){
+    public AddressDTO initAddress() {
         return new AddressDTO();
     }
 
@@ -41,18 +52,37 @@ public class AuthenticationController {
     @PostMapping("/register")
     public String register(
             @Valid RegisterRequest registerRequest,
+            @Valid AddressDTO address,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes
     ) {
-        if (bindingResult.hasErrors()){
-            redirectAttributes.addFlashAttribute("registerRequest",registerRequest);
-            redirectAttributes.addFlashAttribute(
-                    "org.springframework.validation.BindingResult.registerRequest",bindingResult);
+        if (bindingResult.hasErrors()) {
+            errorsInFormFields(
+                    registerRequest,
+                    bindingResult,
+                    redirectAttributes,
+                    SPRING_ATTRIBUTE_REQUEST,
+                    SPRING_ATTRIBUTE_ADDRESS);
 
             return "register";
         }
 
+        registerRequest.setAddressDTO(address);
+        AuthenticationResponse token = this.authenticationService.register(registerRequest);
+
+
         return "redirect:/login";
+    }
+
+    private static void errorsInFormFields(
+            RegisterRequest registerRequest,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes,
+            String request,
+            String address) {
+        redirectAttributes.addFlashAttribute("registerRequest", registerRequest);
+        redirectAttributes.addFlashAttribute(request, bindingResult);
+        redirectAttributes.addFlashAttribute(address, bindingResult);
     }
 
 
