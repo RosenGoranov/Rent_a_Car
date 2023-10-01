@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head}"></head>
+
+<body>
+
+<header th:replace="~{fragments/header}" ></header>
+
+<main class="main">
+    <div class="box model">
+        <Label class="label brand">Select Brand</Label>
+        <select class="select brand">
+            <option value="">--Please choose an option--</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+        </select>
+    </div>
+    <div class="box">
+        <Label class="label model">Select Model</Label>
+        <select class="select model">
+            <option value="">--Please choose an option--</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+        </select>
+    </div>
+    <div class="box">
+        <Label class="label model">Select Fuel type</Label>
+        <select class="select model">
+            <option value="">--Please choose an option--</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+        </select>
+    </div>
+
+    <div class="box">
+        <Label class="label model">Select Transmission</Label>
+        <select class="select model">
+            <option value="">--Please choose an option--</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+        </select>
+    </div>
+
+    <div class="box">
+        <Label class="label model" id="select-model">Select Date and Time</Label>
+        <input class="select"
+               type="datetime-local"
+               id="datetime"
+               min=""
+               name="datetime"
+               required/>
+    </div>
+
+
+</main>
+
+</body>
+
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head}"></head>
+
+<body>
+
+<header th:replace="~{fragments/header}"></header>
+
+<main class="main">
+
+    <div class="box register">
+
+        <h2 class="h2_register">Register User</h2>
+
+        <!-- Registration form start-->
+        <form class="form"
+                th:method="post"
+                th:action="@{/auth/register}"
+                th:object="${registerRequest}">
+
+            <label th:for="firstName">First Name</label>
+            <input type="text"
+                   th:field="*{firstName}"
+                   th:class="${#fields.hasErrors('firstName')}? fieldError"
+                   placeholder="First name"/>
+            <p class="errors alert alert-danger">
+                First name is required.
+            </p>
+
+            <label th:for="lastName">Last Name</label>
+            <input type="text"
+                   th:field="*{lastName}"
+                   class=""
+                   placeholder="Last name"/>
+            <p class="errors alert alert-danger">
+                Last name is required.
+            </p>
+
+            <label th:for="email" class="">Email</label>
+            <input type="text"
+                   th:field="*{email}"
+                   placeholder="Email"/>
+            <p class="errors alert alert-danger">
+                Email is required.
+            </p>
+
+            <label th:for="password" class="">Email</label>
+            <input type="password"
+                   th:field="*{password}"
+                   placeholder="Password"/>
+            <p class="errors alert alert-danger">
+                Password is required.
+            </p>
+
+            <label th:for="confirmPassword" class="">Email</label>
+            <input type="password"
+                   th:field="*{confirmPassword}"
+                   placeholder="Confirm Password"/>
+            <p class="errors alert alert-danger">
+                Password is required.
+            </p>
+
+            <div class="form" th:object="${address}">
+
+            <label th:for="town" class="">Address</label>
+            <input type="text"
+                   th:field="*{town}"
+                   placeholder="Town"/>
+            <p class="errors alert alert-danger">
+                Town is required.
+            </p>
+
+            <label th:for="street" class="">Street</label>
+            <input type="text"
+                   th:field="*{street}"
+                   placeholder="Street"/>
+            <p class="errors alert alert-danger">
+                Street is required.
+            </p>
+
+            <label th:for="number" class="">Number</label>
+            <input type="text"
+                   th:field="*{number}"
+                   placeholder="Number"/>
+            <p class="errors alert alert-danger">
+                Number is required.
+            </p>
+
+            </div>
+
+            <div class="row">
+
+                <div class="button-holder d-flex">
+                    <input type="submit" class="" value="Register"/>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+</main>
+</body>
+</html>

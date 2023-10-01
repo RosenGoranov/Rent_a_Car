@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}">
+</head>
+<header th:fragment="header" class="header">
+    <h2 class="h-tag">Rent you dream car</h2>
+
+    <div class="navbar">
+
+            <a class="crumb" th:href="@{/}">HOME</a>
+            <a class="crumb" th:href="@{auth/register}">Register</a>
+            <a class="crumb" href="#">Login</a>
+            <a class="crumb" href="#">Admin</a>
+            <a class="crumb" href="#">Employee</a>
+
+    </div>
+</header>
+</html>
