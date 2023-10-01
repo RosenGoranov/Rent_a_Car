@@ -3,7 +3,7 @@ package com.example.Rent_a_Car.model.entity;
 import jakarta.persistence.*;
 
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -29,17 +29,12 @@ public abstract class BasePerson {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(nullable = false)
-    private AddressEntity addressEntity;
+    private Address address;
 
 
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
-    @JoinTable(
-            name = "users_roles",
-            joinColumns = { @JoinColumn(name = "user_id") },
-            inverseJoinColumns = { @JoinColumn(name = "role_id") }
-    )
-    private Collection<RoleEntity> roleEntity;
-
+    @OneToMany
+    @JoinColumn(nullable = false)
+    private List<RoleEntity> role;
 
     public long getId() {
         return id;
@@ -86,21 +81,21 @@ public abstract class BasePerson {
         return this;
     }
 
-    public AddressEntity getAddress() {
-        return addressEntity;
+    public Address getAddress() {
+        return address;
     }
 
-    public BasePerson setAddress(AddressEntity addressEntity) {
-        this.addressEntity = addressEntity;
+    public BasePerson setAddress(Address address) {
+        this.address = address;
         return this;
     }
 
-    public Collection<RoleEntity> getRole() {
-        return roleEntity;
+    public List<RoleEntity> getRole() {
+        return role;
     }
 
-    public BasePerson setRole(Collection<RoleEntity> roleEntity) {
-        this.roleEntity = roleEntity;
+    public BasePerson setRole(List<RoleEntity> role) {
+        this.role = role;
         return this;
     }
 

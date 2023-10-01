@@ -91,9 +91,7 @@ public class UserServiceImpl implements UserService {
         } else {
             userEntity.setRole(new ArrayList<>(List.of(this.roleRepository.findByName(RoleEnum.USER))));
         }
-        userEntity.setAddress(new AddressEntity().setTown(optionalTown.get())
-                .setStreet(request.getAddressDTO().getStreet())
-                .setNumber(request.getAddressDTO().getNumber()));
+        userEntity.setAddress(new AddressEntity().setTown(request.getAddressDTO().getTown()));
         this.userRepository.save(userEntity);
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
 

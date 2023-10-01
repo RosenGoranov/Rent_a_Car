@@ -9,6 +9,13 @@ public class AuthenticationRequest {
 
     private String password;
 
+    public AuthenticationRequest() {
+    }
+
+    public AuthenticationRequest(String email) {
+        this.email = email;
+    }
+
     public String getEmail() {
         return email;
     }
