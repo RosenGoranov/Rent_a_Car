@@ -1,91 +1,75 @@
 package com.example.Rent_a_Car.config;
 
 
-import com.example.Rent_a_Car.model.enums.RoleEnum;
-import com.example.Rent_a_Car.repository.UserRepository;
-import com.example.Rent_a_Car.services.ApplicationUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.context.DelegatingSecurityContextRepository;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
-import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
-import org.springframework.security.web.context.SecurityContextRepository;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import static com.example.Rent_a_Car.model.enums.RoleEnum.ADMIN;
+import static com.example.Rent_a_Car.model.enums.RoleEnum.USER;
+import static com.example.Rent_a_Car.model.enums.UserPermissionEnum.*;
 
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration {
 
+public class SecurityConfiguration {
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    private final AuthenticationProvider authenticationProvider;
+
+    public SecurityConfiguration(JwtAuthenticationFilter jwtAuthenticationFilter, AuthenticationProvider authenticationProvider) {
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.authenticationProvider = authenticationProvider;
+    }
 
     @Bean
-    public SecurityFilterChain webFilterChain(HttpSecurity http,
-                                              SecurityContextRepository securityContextRepository) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
         http
-                .authorizeHttpRequests(
-                        authorize ->
-                                authorize.
-                                        requestMatchers("/static/**", "/css/**", "/favicon/**", "/images/**", "/js/**")
-                                        .permitAll()
-                                        .requestMatchers("/", "/auth/login", "/auth/register", "/auth/login-error", "rent-car")
-                                        .permitAll().
-                                        requestMatchers("/user**").hasRole(RoleEnum.USER.name()).
-                                        requestMatchers("/employee/**").hasRole(RoleEnum.EMPLOYEE.name()).
-                                        requestMatchers("/moderator/**").hasRole(RoleEnum.MODERATOR.name()).
-                                        requestMatchers("/admin/**").hasRole(RoleEnum.ADMIN.name()).
-                                        anyRequest().authenticated()
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests((authorizeHttpRequests) ->
+                        authorizeHttpRequests
+                                .requestMatchers("/css/**","/pics/**","/js/**")
+                                .permitAll()
+                                .requestMatchers("/api/v1/auth/**", "/", "/index", "/auth/**")
+                                .permitAll()
+                                .requestMatchers("/api/v1/home/user/**").hasRole(USER.name())
+                                .requestMatchers(HttpMethod.POST, "/api/v1/home/admin/**")
+                                .hasAuthority(CREATE.name())
+                                .requestMatchers(HttpMethod.PUT, "/api/v1/home/admin/**")
+                                .hasAuthority(UPDATE.name())
+                                .requestMatchers(HttpMethod.PATCH, "/api/v1/home/admin/**")
+                                .hasAuthority(UPDATE.name())
+                                .requestMatchers(HttpMethod.DELETE, "/api/v1/home/admin/**")
+                                .hasAuthority(DELETE.name())
+                                .requestMatchers(HttpMethod.GET, "/api/v1/home/admin/**")
+                                .hasAuthority(READS.name())
+                                .requestMatchers("api/v1/home/admin/**", "/**")
+                                .hasRole(ADMIN.name())
+                                .anyRequest()
+                                .authenticated()
                 )
-                .formLogin(
-                        (formLogin) ->
-                                formLogin.
-                                        loginPage("/login").
-                                        usernameParameter("email").
-                                        passwordParameter("password").
-                                        defaultSuccessUrl("/", true).
-                                        failureForwardUrl("/login-error")
-                )
-                .logout((logout) ->
-                        logout.logoutUrl("/logout").
-                                logoutSuccessUrl("/").
-                                invalidateHttpSession(true)
-                )
-                .securityContext(
-                        securityContext -> securityContext.
-                                securityContextRepository(securityContextRepository)
-                )
-                .sessionManagement((session) ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
+                .sessionManagement((sessionManagement) ->
+                        sessionManagement
+                                .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                ).logout((logout) ->
+                        logout
+                                .deleteCookies()
+                                .invalidateHttpSession(true)
+                                .logoutUrl("/index"))
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
-
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public SecurityContextRepository securityContextRepository() {
-        return new DelegatingSecurityContextRepository(
-                new RequestAttributeSecurityContextRepository(),
-                new HttpSessionSecurityContextRepository()
-        );
-    }
-
-    @Bean
-    public UserDetailsService userDetailsService(UserRepository userRepository) {
-
-        return new ApplicationUserDetailsService(userRepository);
-
     }
 
 
 }
-

@@ -3,12 +3,11 @@ package com.example.Rent_a_Car.model.entity;
 import jakarta.persistence.*;
 
 
-import java.util.List;
 import java.util.Objects;
 
 
 @MappedSuperclass
-public abstract class BasePerson {
+public class BasePerson {
 
 
     @Id
@@ -32,9 +31,23 @@ public abstract class BasePerson {
     private Address address;
 
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(nullable = false)
-    private List<RoleEntity> role;
+    private Role role;
+
+
+    public BasePerson() {
+    }
+
+    public BasePerson(long id, String firstName, String lastName, String email, String password, Address address, Role role) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.address = address;
+        this.role = role;
+    }
 
     public long getId() {
         return id;
@@ -90,11 +103,11 @@ public abstract class BasePerson {
         return this;
     }
 
-    public List<RoleEntity> getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public BasePerson setRole(List<RoleEntity> role) {
+    public BasePerson setRole(Role role) {
         this.role = role;
         return this;
     }

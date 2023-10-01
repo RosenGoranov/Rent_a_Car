@@ -18,6 +18,12 @@ public class Employee extends BasePerson {
     public Employee() {
     }
 
+    public Employee(long id, String firstName, String lastName, String email, String password, Address address, Role role, BigDecimal salary, LocalDate hireData, boolean isLeft) {
+        super(id, firstName, lastName, email, password, address, role);
+        this.salary = salary;
+        this.hireData = hireData;
+        this.isLeft = false;
+    }
 
     public BigDecimal getSalary() {
         return salary;
