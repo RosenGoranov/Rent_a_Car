@@ -1,29 +1,18 @@
 spring:
   main:
-    allow-circular-references: false
-    log-startup-info: off
+    allow-circular-references: true
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/rent_a_car?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
     username: root
     password: 1234
   jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect
+    database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: update
   mvc:
-    hidden-method:
+    hiddenmethod:
       filter:
         enabled: true
-  thymeleaf: # Thymeleaf
-    cache: false
-    mode: HTML
-    encoding: UTF-8
-    prefix: file:src/main/resources/templates/
-    resources: # Static resources
-      static-locations: file:src/main/resources/static/
-      cache:
-        period: 0
-  reactor:
-    debug-agent:
-      enabled: on
+
+

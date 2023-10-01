@@ -2,6 +2,7 @@ package com.example.Rent_a_Car.services;
 
 
 import com.example.Rent_a_Car.model.dto.UserDTO;
+import com.example.Rent_a_Car.model.entity.Address;
 import com.example.Rent_a_Car.model.entity.User;
 import com.example.Rent_a_Car.repository.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -39,16 +40,23 @@ public class UserService {
     }
 
 
-    public void save(UserDTO userDTO) throws RuntimeException {
+    public boolean save(UserDTO userDTO) throws RuntimeException {
         Optional<User> optionalUser = this.userRepository.findByEmail(userDTO.getEmail());
         if (optionalUser.isPresent()) {
-            throw new ExistUserException("Exist optionalUser email");
+            return false;
+        }
+        Optional<Address> address = this.addressService.getAddress(
+                userDTO.getAddressDTO().getTown(),
+                userDTO.getAddressDTO().getStreet(),
+                userDTO.getAddressDTO().getNumber());
+        if (address.isEmpty()) {
+            this.addressService.getAddressTown(userDTO.getAddressDTO().getTown());
         }
         ModelMapper modelMapper = new ModelMapper();
         User user = modelMapper.map(userDTO, User.class);
 
-        //TODO
         this.userRepository.save(user);
+        return true;
     }
 
     public List<UserDTO> getUsers() {
