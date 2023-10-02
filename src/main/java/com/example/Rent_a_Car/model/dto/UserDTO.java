@@ -25,7 +25,7 @@ public class UserDTO implements UserDetails {
 
     private String confirmPassword;
 
-    private boolean isAccountNonExpired;
+    private boolean isAccountNonExpired ;
 
     private boolean isAccountNonLocked;
 
@@ -147,12 +147,12 @@ public class UserDTO implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return this.isAccountNonExpired;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return this.isAccountNonLocked;
+        return true;
     }
 
     @Override

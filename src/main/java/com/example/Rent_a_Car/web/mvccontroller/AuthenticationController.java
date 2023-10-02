@@ -84,7 +84,7 @@ public class AuthenticationController {
             return "redirect:/login";
         }
 
-        return "redirect:/login";
+        return "redirect:/auth/login";
     }
 
 

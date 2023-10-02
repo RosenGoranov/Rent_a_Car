@@ -36,13 +36,13 @@ public class InitDB implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-//        if (roleRepository.count() == 0) {
-//
-//            roleRepository.saveAll(List.of(
-//                   new Role.(ADMIN).build(),
-//                    Role.builder().name(USER).build())
-//            );
-//        }
+        if (roleRepository.count() == 0) {
+
+            roleRepository.saveAll(List.of(
+                   new Role().setName(ADMIN),
+                    new Role().setName(USER))
+            );
+        }
 //
 //        if (userRepository.count() == 0) {
 //            Role admin = roleRepository.findByName(ADMIN);

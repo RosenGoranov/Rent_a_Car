@@ -6,17 +6,16 @@ import com.example.Rent_a_Car.model.auth.AuthenticationResponse;
 import com.example.Rent_a_Car.model.auth.RegisterRequest;
 import com.example.Rent_a_Car.model.dto.AddressDTO;
 import com.example.Rent_a_Car.model.dto.UserDTO;
-import com.example.Rent_a_Car.model.entity.Address;
 import com.example.Rent_a_Car.model.entity.Role;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.AssertTrue;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
 import static com.example.Rent_a_Car.model.enums.RoleEnum.ADMIN;
 import static com.example.Rent_a_Car.model.enums.RoleEnum.USER;
@@ -52,16 +51,15 @@ public class AuthenticationService {
 
         Role role = null;
         if (this.userService.getUsers().size() == 0) {
-            role = new Role().setName(ADMIN);
-        } else {
-            role = roleService.getRole(USER);
+            role = this.roleService.getRole(ADMIN);
         }
+        role = roleService.getRole(USER);
 
 
         UserDTO userDTO = buildUserDTO(request, role);
         userDTO.setRole(role);
         boolean emailExist = userService.save(userDTO);
-        if (!emailExist){
+        if (!emailExist) {
             return AuthenticationResponse.builder().
                     setToken(null);
         }
@@ -76,7 +74,7 @@ public class AuthenticationService {
     }
 
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) throws UsernameNotFoundException {
+    public AuthenticationResponse authenticate(AuthenticationRequest request){
         manager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -84,7 +82,7 @@ public class AuthenticationService {
                 )
         );
 
-        var userDTO = userService.getByEmail(request.getEmail());
+        UserDTO userDTO = userService.getByEmail(request.getEmail());
 
 
         var jwtToken = jwtService.generateToken(userDTO);

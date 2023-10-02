@@ -5,6 +5,7 @@ import com.example.Rent_a_Car.model.dto.UserDTO;
 import com.example.Rent_a_Car.model.entity.Address;
 import com.example.Rent_a_Car.model.entity.User;
 import com.example.Rent_a_Car.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -39,7 +40,7 @@ public class UserService {
         return modelMapper.map(optional.get(), UserDTO.class);
     }
 
-
+    @Transactional
     public boolean save(UserDTO userDTO) throws RuntimeException {
         Optional<User> optionalUser = this.userRepository.findByEmail(userDTO.getEmail());
         if (optionalUser.isPresent()) {
