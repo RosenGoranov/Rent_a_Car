@@ -19,4 +19,8 @@ public class RoleService {
     public Role getRole(RoleEnum name) {
         return this.roleRepository.findByName(name);
     }
+
+    public void save(Role role) {
+        this.roleRepository.saveAndFlush(role);
+    }
 }
