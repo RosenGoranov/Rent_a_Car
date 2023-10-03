@@ -42,11 +42,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String email;
+        //TODO IN THYMELEAF
+      //  || !authHeader.startsWith("Bearer ")
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+
             filterChain.doFilter(request, response);
             return;
         }
+        //TODO IN THYMELEAF
         jwt = authHeader.substring(7);
+        //jwt = authHeader;
         email = jwtService.extractEmail(jwt);
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(email);

@@ -15,8 +15,8 @@ public class User extends BasePerson {
     private boolean isAccountNonLocked;
 
 
-    public User () {
-
+    public User() {
+        super();
     }
 
     public User(boolean isAccountNonExpired, boolean isAccountNonLocked) {
@@ -24,10 +24,6 @@ public class User extends BasePerson {
         this.isAccountNonExpired = isAccountNonExpired;
         this.isAccountNonLocked = isAccountNonLocked;
     }
-
-
-
-
 
 
     public boolean isAccountNonExpired() {

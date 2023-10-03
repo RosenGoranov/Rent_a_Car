@@ -1,12 +1,14 @@
 package com.example.Rent_a_Car.web.mvccontroller;
 
 import com.example.Rent_a_Car.model.auth.AuthenticationRequest;
-import com.example.Rent_a_Car.model.auth.AuthenticationResponse;
 import com.example.Rent_a_Car.model.auth.RegisterRequest;
 import com.example.Rent_a_Car.model.dto.AddressDTO;
 import com.example.Rent_a_Car.model.dto.UserDTO;
 import com.example.Rent_a_Car.services.AuthenticationService;
 import com.example.Rent_a_Car.services.UserService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -67,7 +69,8 @@ public class AuthenticationController {
             @Valid RegisterRequest registerRequest,
             @Valid AddressDTO address,
             BindingResult bindingResult,
-            RedirectAttributes redirectAttributes
+            RedirectAttributes redirectAttributes,
+            HttpServletResponse servletResponse
     ) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("registerRequest", registerRequest);
@@ -76,15 +79,18 @@ public class AuthenticationController {
 
             return "register";
         }
-
-        registerRequest.setAddressDTO(address);
-        AuthenticationResponse token = this.authenticationService.register(registerRequest);
-        if (token == null) {
+        if (userService.getByEmail(registerRequest.getEmail()) != null) {
             redirectAttributes.addFlashAttribute("emailExist", true);
             return "redirect:/login";
         }
+        registerRequest.setAddressDTO(address);
+        String token = this.authenticationService.register(registerRequest).getToken();
+        Cookie cookie = new Cookie("AUTH_TOKEN", token);
+        cookie.setPath("/");
+        cookie.setMaxAge(3600);
+        servletResponse.setHeader("Authorization", ("Bearer " + token));
 
-        return "redirect:/auth/login";
+        return "redirect:/home";
     }
 
 
@@ -97,7 +103,8 @@ public class AuthenticationController {
     public String login(
             @Valid AuthenticationRequest loginRequest,
             BindingResult bindingResult,
-            RedirectAttributes redirectAttributes
+            RedirectAttributes redirectAttributes,
+            HttpServletResponse servletResponse
     ) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("loginRequest", loginRequest);
@@ -107,11 +114,17 @@ public class AuthenticationController {
 
         try {
             UserDTO byEmail = this.userService.getByEmail(loginRequest.getEmail());
-        }catch (RuntimeException e){
-            redirectAttributes.addFlashAttribute("notExistUser",e.getMessage());
+        } catch (RuntimeException e) {
+            redirectAttributes.addFlashAttribute("notExistUser", e.getMessage());
             return "redirect:/register";
         }
 
+        String token = this.authenticationService.authenticate(loginRequest).getToken();
+        Cookie cookie = new Cookie("AUT_TOKEN", token);
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+        cookie.setMaxAge(3600);
+        servletResponse.addHeader("Authorization", ("Bearer " + token));
         return "redirect:/home";
     }
 

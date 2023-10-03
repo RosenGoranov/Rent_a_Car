@@ -8,11 +8,8 @@ import com.example.Rent_a_Car.model.dto.AddressDTO;
 import com.example.Rent_a_Car.model.dto.UserDTO;
 import com.example.Rent_a_Car.model.entity.Role;
 import jakarta.transaction.Transactional;
-import jakarta.validation.constraints.AssertTrue;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -68,10 +65,6 @@ public class AuthenticationService {
                 setToken(jwtToken);
     }
 
-    @AssertTrue(message = "User  with this email exists")
-    private boolean userExist(String email) {
-        return email == null;
-    }
 
 
     public AuthenticationResponse authenticate(AuthenticationRequest request){
@@ -85,7 +78,7 @@ public class AuthenticationService {
         UserDTO userDTO = userService.getByEmail(request.getEmail());
 
 
-        var jwtToken = jwtService.generateToken(userDTO);
+        String jwtToken = jwtService.generateToken(userDTO);
         return AuthenticationResponse.builder().
                 setToken(jwtToken);
     }
