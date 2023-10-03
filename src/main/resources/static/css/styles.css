@@ -122,4 +122,8 @@ border: 0.2em solid;
 padding: 1em;
 }
 
+.fetchDataButton{
+display: none;
+}
+
 
