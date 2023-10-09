@@ -42,15 +42,15 @@ public class Car {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    public User user;
+    @OneToOne(targetEntity = UserEntity.class, fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    public UserEntity userEntity;
 
     private boolean isReserved;
 
     public Car() {
     }
 
-    public Car(long id, Model model, Transmission transmission, FuelType fuelType, String vinNumber, String plate, LocalDate regDate, BigDecimal rentPerDay, String description, User user, boolean isReserved) {
+    public Car(long id, Model model, Transmission transmission, FuelType fuelType, String vinNumber, String plate, LocalDate regDate, BigDecimal rentPerDay, String description, UserEntity userEntity, boolean isReserved) {
         this.id = id;
         this.model = model;
         this.transmission = transmission;
@@ -60,7 +60,7 @@ public class Car {
         this.regDate = regDate;
         this.rentPerDay = rentPerDay;
         this.description = description;
-        this.user = user;
+        this.userEntity = userEntity;
         this.isReserved = isReserved;
     }
 
@@ -145,12 +145,12 @@ public class Car {
         return this;
     }
 
-    public User getUser() {
-        return user;
+    public UserEntity getUser() {
+        return userEntity;
     }
 
-    public Car setUser(User user) {
-        this.user = user;
+    public Car setUser(UserEntity userEntity) {
+        this.userEntity = userEntity;
         return this;
     }
 

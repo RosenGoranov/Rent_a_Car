@@ -23,7 +23,7 @@
             <label th:for="firstName">First Name</label>
             <input type="text"
                    th:field="*{firstName}"
-                   th:class="${#fields.hasErrors('firstName')}? fieldError"
+                   th:class="${#fields.hasErrors('firstName')} ? fieldError"
                    placeholder="First name"/>
             <p class="errors alert alert-danger">
                 First name is required.

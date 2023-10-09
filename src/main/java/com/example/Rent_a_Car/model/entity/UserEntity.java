@@ -3,10 +3,15 @@ package com.example.Rent_a_Car.model.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+
 
 @Entity
 @Table(name = "users")
-public class User extends BasePerson {
+public class UserEntity extends BasePerson {
 
     @Column
     private boolean isAccountNonExpired;
@@ -15,22 +20,15 @@ public class User extends BasePerson {
     private boolean isAccountNonLocked;
 
 
-    public User() {
+    public UserEntity() {
         super();
     }
-
-    public User(boolean isAccountNonExpired, boolean isAccountNonLocked) {
-        super();
-        this.isAccountNonExpired = isAccountNonExpired;
-        this.isAccountNonLocked = isAccountNonLocked;
-    }
-
 
     public boolean isAccountNonExpired() {
         return isAccountNonExpired;
     }
 
-    public User setAccountNonExpired(boolean accountNonExpired) {
+    public UserEntity setAccountNonExpired(boolean accountNonExpired) {
         isAccountNonExpired = accountNonExpired;
         return this;
     }
@@ -39,8 +37,10 @@ public class User extends BasePerson {
         return isAccountNonLocked;
     }
 
-    public User setAccountNonLocked(boolean accountNonLocked) {
+    public UserEntity setAccountNonLocked(boolean accountNonLocked) {
         isAccountNonLocked = accountNonLocked;
         return this;
     }
+
+
 }

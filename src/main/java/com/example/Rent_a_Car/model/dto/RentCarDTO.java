@@ -3,13 +3,11 @@ package com.example.Rent_a_Car.model.dto;
 import com.example.Rent_a_Car.model.entity.FuelType;
 import com.example.Rent_a_Car.model.entity.Model;
 import com.example.Rent_a_Car.model.entity.Transmission;
-import com.example.Rent_a_Car.model.entity.User;
+import com.example.Rent_a_Car.model.entity.UserEntity;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 
 public class RentCarDTO {
@@ -30,7 +28,7 @@ public class RentCarDTO {
     private String description;
 
     @NotBlank
-    private User user;
+    private UserEntity userEntity;
 
     public RentCarDTO() {
     }
@@ -40,13 +38,13 @@ public class RentCarDTO {
                       FuelType fuelType,
                       BigDecimal rentPerDay,
                       String description,
-                      User user) {
+                      UserEntity userEntity) {
         this.model = model;
         this.transmission = transmission;
         this.fuelType = fuelType;
         this.rentPerDay = rentPerDay;
         this.description = description;
-        this.user = user;
+        this.userEntity = userEntity;
     }
 
     public Model getModel() {
@@ -94,12 +92,12 @@ public class RentCarDTO {
         return this;
     }
 
-    public User getUser() {
-        return user;
+    public UserEntity getUser() {
+        return userEntity;
     }
 
-    public RentCarDTO setUser(User user) {
-        this.user = user;
+    public RentCarDTO setUser(UserEntity userEntity) {
+        this.userEntity = userEntity;
         return this;
     }
 }

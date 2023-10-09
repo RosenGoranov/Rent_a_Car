@@ -17,21 +17,23 @@
         <!-- Login form start-->
         <form class="form"
               th:method="post"
-              th:action="@{/auth/login}"
-              th:object="${loginRequest}">
+              th:action="@{/auth/login}">
 
-            <label th:for="email">First Name</label>
+            <label th:for="email">Email</label>
             <input type="text"
-                   th:field="*{email}"
-                   th:class="${#fields.hasErrors('email')} ? fieldError"
+                   id="username"
+                   name="username"
+                   th:value="${username}"
                    placeholder="Email"/>
             <p class="errors alert alert-danger">
                 Email is required.
             </p>
 
-            <label th:for="password">Last Name</label>
-            <input type="password"
-                   th:field="*{password}"
+            <label th:for="password">Password</label>
+            <input
+                   id="password"
+                   name="password"
+                   type="password"
                    class=""
                    placeholder="Password"/>
             <p class="errors alert alert-danger">
@@ -41,8 +43,7 @@
             <div class="row">
 
                 <div class="button-holder d-flex">
-                    <button type="submit" id="authenticateButton" class="" value="Register"> REGISTER </button>
-                    <button id="fetchDataButton"></button>
+                    <input type="submit" id="authenticateButton" class="" value="LOGIN"/>
                 </div>
             </div>
 

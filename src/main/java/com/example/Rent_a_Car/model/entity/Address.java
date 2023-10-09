@@ -20,17 +20,10 @@ public class Address {
     private String number;
 
 
-    public Address() {
-
-    }
 
 
-    public Address(Town town, Street street, String number) {
-        this();
-        this.town = town;
-        this.street = street;
-        this.number = number;
-    }
+
+
 
     public static Address builder() {
         return new Address();

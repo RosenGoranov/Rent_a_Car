@@ -30,11 +30,15 @@ public class AddressService {
 
         return this.addressRepository
                 .findByTownNameAndStreetNameAndNumber(town, street, number)
-                .orElse(new Address(
-                        this.townRepository.findByName(town).orElse(new Town().setName(town)),
-                        this.streetRepository.findByName(street).orElse(new Street().setName(street)),
-                        number
-                ));
+                .orElse(new Address()
+                        .setTown(this.townRepository
+                                .findByName(town)
+                                .orElse(new Town().setName(town)))
+                        .setStreet(this.streetRepository
+                                .findByName(street)
+                                .orElse(new Street().setName(street)))
+                        .setNumber(number)
+                );
     }
 
 
