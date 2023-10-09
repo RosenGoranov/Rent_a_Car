@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" >
 <head th:replace="~{fragments/head}">
+    <title>Best Rent sa Car Company</title>
 </head>
 <header th:fragment="header" class="header">
     <h2 class="h-tag">Rent you dream car</h2>
 
     <div class="navbar">
-
-            <a class="crumb" th:href="@{/}">HOME</a>
+<th:block >
+    <a class="crumb" href="#">Admin</a>
+    <a class="crumb" href="#">Employee</a>
+    <a class="crumb" th:href="@{/auth/login}">Login</a>
+</th:block>
+            <a class="crumb" th:href="@{/pages/users}">HOME</a>
             <a class="crumb" th:href="@{/auth/register}">Register</a>
-            <a class="crumb" th:href="@{/auth/login}">Login</a>
-            <a class="crumb" href="#">Admin</a>
-            <a class="crumb" href="#">Employee</a>
 
     </div>
 </header>

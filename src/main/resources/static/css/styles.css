@@ -1,8 +1,9 @@
-*{
-    margin: 0px;
-    padding: 0px;
+* {
+    margin: 0;
+    padding: 0;
 }
-*{
+
+* {
     box-sizing: border-box;
 }
 
@@ -13,7 +14,7 @@ html {
 }
 
 body {
-    border-sizing: inherit
+    border-sizing: inherit;
     margin: 1em;
     padding: 1em;
     background-color: #bdc3c7;
@@ -31,8 +32,7 @@ body {
 .navbar {
     margin: 1em;
     padding: 1em;
-    display: flex;
-    display:inline-flex;
+    display: inline-flex;
     flex-wrap: wrap;
 }
 
@@ -48,7 +48,7 @@ body {
 
 }
 
-.crumb:hover{
+.crumb:hover {
     background: #d35400;
     color: black;
 }
@@ -61,69 +61,67 @@ body {
     border: 0.5em;
 }
 
-.main{
-display: flex;
-flex-direction: column;
-align-items: center;
-padding: 2em;
-margin: 2em;
-border: solid ;
-border-color: #16a085;
-flex-wrap: wrap;
-background-image: url("/pics/main-car.jpg");
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2em;
+    margin: 2em;
+    border: solid #16a085;
+    flex-wrap: wrap;
+    background-image: url("static/images/main-car.jpg");
 }
 
-.box{
+.box {
     display: flex;
     justify-content: space-between;
     padding: 0.5em;
     margin: 0.5em;
-    border: solid;
     border-radius: 0.5em;
-    border-color: #d35400;
+    border: solid #d35400;
     color: #34495e;
     background-color: azure;
     width: 40%;
-    overflow: scroll;
+    overflow: auto;
 }
 
-.label{
-font-size: 1.2em;
-font-family: cursive;
-font-weight: bold
+.label {
+    font-size: 1.2em;
+    font-family: cursive;
+    font-weight: bold
 }
 
-.select{
+.select {
     font-size: 0.8em;
-    font-family: cursive; 
+    font-family: cursive;
     background-color: aqua;
     padding: 0.5em;
 }
 
-.register{
+.register {
     flex-direction: column;
     align-items: center;
     overflow: hidden;
     font-size: 1.2em;
     border: 1em solid;
     border-radius: 1em;
-    margin: 1,5em;
+    margin: 1.5em;
 
 }
 
-.h2_register{
-color: #0328fc;
-margin-bottom: 1,5em;
+.h2_register {
+    color: #0328fc;
+    margin-bottom: 1.5em;
 }
 
-.form{
-display: grid;
-border: 0.2em solid;
-padding: 1em;
+.form {
+    display: grid;
+    border: 0.2em solid;
+    padding: 1em;
 }
 
-.fetchDataButton{
-display: none;
+.fetchDataButton {
+    display: none;
 }
 
 
