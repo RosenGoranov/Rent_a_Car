@@ -11,6 +11,7 @@
 html {
     font-family: 'Times New Roman', Times, sans-serif;
     font-size: 16px;
+
 }
 
 body {
@@ -37,6 +38,7 @@ body {
 }
 
 .crumb {
+    display: flex;
     font-size: 1.2em;
     margin: 0.4em;
     padding: 0.6em;
@@ -44,13 +46,18 @@ body {
     background-color: black;
     color: aqua;
     text-decoration: none;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
+    min-height: 50px;
+    min-width: 120px;
 
 }
 
 .crumb:hover {
     background: #d35400;
     color: black;
+
 }
 
 .h-tag {
@@ -69,7 +76,20 @@ body {
     margin: 2em;
     border: solid #16a085;
     flex-wrap: wrap;
-    background-image: url("static/images/main-car.jpg");
+    background-image: url("/images/main-car.jpg");
+}
+
+.all {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2em;
+    margin: 2em;
+    border: solid #16a085;
+    flex-wrap: wrap;
+    background-color: #34495e;
+    color: black;
+    font-family: serif;
 }
 
 .box {

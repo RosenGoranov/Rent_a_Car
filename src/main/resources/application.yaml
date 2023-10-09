@@ -11,8 +11,16 @@ spring:
     hibernate:
       ddl-auto: update
   mvc:
-    hiddenmethod:
+    hidden-method:
       filter:
         enabled: true
-
+  thymeleaf: # Thymeleaf
+    cache: false
+    mode: HTML
+    encoding: UTF-8
+    prefix: file:src/main/resources/templates/
+    resources: # Static resources
+      static-locations: file:src/main/resources/static/
+      cache:
+        period: 0
 

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org" >
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:fragment="html">
 <head th:replace="~{fragments/head}">
     <title>Best Rent sa Car Company</title>
 </head>
@@ -8,14 +10,26 @@
     <h2 class="h-tag">Rent you dream car</h2>
 
     <div class="navbar">
-<th:block >
-    <a class="crumb" href="#">Admin</a>
-    <a class="crumb" href="#">Employee</a>
-    <a class="crumb" th:href="@{/auth/login}">Login</a>
-</th:block>
-            <a class="crumb" th:href="@{/pages/users}">HOME</a>
-            <a class="crumb" th:href="@{/auth/register}">Register</a>
+        <a class="crumb" th:href="@{/}">HOME</a>
+        <th:block sec:authorize="isAuthenticated()">
 
+            <a sec:authorize="hasRole('ADMIN')" class="crumb" th:href="@{/pages/admin}">Admin</a>
+            <a sec:authorize="hasRole('MODERATOR')" class="crumb" th:href="@{/pages/moderator}">Moderator</a>
+            <a sec:authorize="hasRole('EMPLOYEE')" class="crumb" th:href="@{/pages/employee}">Employee</a>
+            <a sec:authorize="hasRole('USER')" class="crumb" th:href="@{/pages/users}">RENT A CAR</a>
+
+
+        </th:block>
+        <th:block sec:authorize="isAnonymous()">
+
+            <a class="crumb" th:href="@{/auth/register}">Register</a>
+            <a class="crumb" th:href="@{/auth/login}">Login</a>
+        </th:block>
+        <form sec:authorize="isAuthenticated()"
+                th:method="post"
+                th:action="@{/auth/logout}">
+            <input class="crumb" type="submit" value="Logout">
+        </form>
     </div>
 </header>
 </html>

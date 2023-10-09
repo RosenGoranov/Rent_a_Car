@@ -3,7 +3,7 @@ package com.example.Rent_a_Car.config;
 
 import com.example.Rent_a_Car.model.enums.RoleEnum;
 import com.example.Rent_a_Car.repository.UserRepository;
-import com.example.Rent_a_Car.utils.ApplicationUserDetailsService;
+import com.example.Rent_a_Car.services.ApplicationUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -31,14 +31,14 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(
                         authorize ->
                                 authorize.
-                                        requestMatchers("/css/**", "/favicon/**", "/images/**", "/js/**")
+                                        requestMatchers("/static/**","/css/**", "/favicon/**", "/images/**", "/js/**")
+                                        .permitAll()
+                                        .requestMatchers("/", "/auth/login", "/auth/register", "/auth/login-error")
                                         .permitAll().
-                                        requestMatchers("/", "/auth/login", "/auth/register", "/auth/login-error")
-                                        .permitAll().
-                                        requestMatchers("/pages/home").hasRole(RoleEnum.USER.name()).
-                                        requestMatchers("/pages/employee").hasRole(RoleEnum.EMPLOYEE.name()).
-                                        requestMatchers("/pages/moderators").hasRole(RoleEnum.MODERATOR.name()).
-                                        requestMatchers("/pages/admins").hasRole(RoleEnum.ADMIN.name()).
+                                        requestMatchers("/pages/user-pages").hasRole(RoleEnum.USER.name()).
+                                        requestMatchers("/pages/employee-pages").hasRole(RoleEnum.EMPLOYEE.name()).
+                                        requestMatchers("/pages/moderators-pages").hasRole(RoleEnum.MODERATOR.name()).
+                                        requestMatchers("/pages/admins-pages").hasRole(RoleEnum.ADMIN.name()).
                                         anyRequest().authenticated()
                 )
                 .formLogin(
@@ -53,7 +53,7 @@ public class SecurityConfiguration {
                                         failureForwardUrl("/auth/login-error")
                 )
                 .logout((logout) ->
-                        logout.logoutUrl("/logout").
+                        logout.logoutUrl("/auth/logout").
                                 logoutSuccessUrl("/").
                                 invalidateHttpSession(true)
                 ).securityContext(

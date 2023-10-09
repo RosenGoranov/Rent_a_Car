@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:fragment="html">
 
 <head th:replace="~{fragments/head}"></head>
 
@@ -17,7 +19,8 @@
         <!-- Login form start-->
         <form class="form"
               th:method="post"
-              th:action="@{/auth/login}">
+              th:action="@{/auth/login}"
+              th:object="${loginRequest}">
 
             <label th:for="email">Email</label>
             <input type="text"

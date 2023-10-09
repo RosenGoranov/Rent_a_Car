@@ -52,7 +52,10 @@ public class AuthenticationController {
         return new AddressDTO();
     }
 
-
+    @ModelAttribute(name = "loginRequest")
+    public AuthenticationRequest loginRequest() {
+        return new AuthenticationRequest();
+    }
 
 
     @GetMapping("/register")
@@ -85,7 +88,7 @@ public class AuthenticationController {
 
         } catch (UsernameNotFoundException e) {
             registerRequest.setAddressDTO(address);
-            this.userService.save(registerRequest,successfulAuth -> {
+            this.userService.save(registerRequest, successfulAuth -> {
                 SecurityContextHolderStrategy strategy = SecurityContextHolder.getContextHolderStrategy();
 
                 SecurityContext context = strategy.createEmptyContext();
@@ -106,7 +109,7 @@ public class AuthenticationController {
 
     @GetMapping("/login")
     public String loginForm() {
-        return "login";
+        return "login-pages";
     }
 
     @PostMapping("/auth/login-error")
