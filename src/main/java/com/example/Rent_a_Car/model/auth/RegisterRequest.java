@@ -31,10 +31,6 @@ public class RegisterRequest {
 
     private AddressDTO addressDTO;
 
-    @AssertTrue(message = "Password does not match")
-    private boolean equalPassword() {
-        return this.password.equals(this.confirmPassword);
-    }
 
     public RegisterRequest() {
     }

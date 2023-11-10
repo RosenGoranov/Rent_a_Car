@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "employees")
-public class Employee extends BasePerson {
+public class EmployeeEntity extends BasePerson {
     private BigDecimal salary;
 
     private LocalDate hireData;
@@ -17,7 +17,7 @@ public class Employee extends BasePerson {
 
 
 
-    public Employee() {
+    public EmployeeEntity() {
         super();
     }
 
@@ -25,7 +25,7 @@ public class Employee extends BasePerson {
         return salary;
     }
 
-    public Employee setSalary(BigDecimal salary) {
+    public EmployeeEntity setSalary(BigDecimal salary) {
         this.salary = salary;
         return this;
     }
@@ -34,7 +34,7 @@ public class Employee extends BasePerson {
         return hireData;
     }
 
-    public Employee setHireData(LocalDate hireData) {
+    public EmployeeEntity setHireData(LocalDate hireData) {
         this.hireData = hireData;
         return this;
     }
@@ -43,7 +43,7 @@ public class Employee extends BasePerson {
         return isLeft;
     }
 
-    public Employee setLeft(boolean left) {
+    public EmployeeEntity setLeft(boolean left) {
         isLeft = left;
         return this;
     }

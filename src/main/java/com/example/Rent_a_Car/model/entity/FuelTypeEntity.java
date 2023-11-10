@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "fuel_type")
-public class FuelType {
+public class FuelTypeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,10 +18,10 @@ public class FuelType {
     @Column(nullable = false)
     private FuelTypeEnums name;
 
-    public FuelType() {
+    public FuelTypeEntity() {
     }
 
-    public FuelType(long id, FuelTypeEnums name) {
+    public FuelTypeEntity(long id, FuelTypeEnums name) {
         this.id = id;
         this.name = name;
     }
@@ -30,7 +30,7 @@ public class FuelType {
         return id;
     }
 
-    public FuelType setId(long id) {
+    public FuelTypeEntity setId(long id) {
         this.id = id;
         return this;
     }
@@ -39,7 +39,7 @@ public class FuelType {
         return name;
     }
 
-    public FuelType setName(FuelTypeEnums name) {
+    public FuelTypeEntity setName(FuelTypeEnums name) {
         this.name = name;
         return this;
     }

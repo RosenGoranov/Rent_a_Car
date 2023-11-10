@@ -11,6 +11,8 @@ import java.util.Collection;
 
 public class AppUserDetail extends User {
 
+    private long id;
+
     private String address;
     private String fullName;
 
@@ -19,6 +21,14 @@ public class AppUserDetail extends User {
         super(username, password, authorities);
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public AppUserDetail setId(long id) {
+        this.id = id;
+        return this;
+    }
 
     public String getAddress() {
         return address;

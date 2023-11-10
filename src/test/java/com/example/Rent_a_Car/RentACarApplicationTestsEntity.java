@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class RentACarApplicationTests {
+class RentACarApplicationTestsEntity {
 
 	@Test
 	void contextLoads() {
@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class RentACarApplicationTests {
+class RentACarApplicationTestsEntity {
 
 	@Test
 	void contextLoads() {

@@ -1,13 +1,6 @@
 package com.example.Rent_a_Car.model.dto;
 
-import com.example.Rent_a_Car.model.entity.Role;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
-import org.springframework.web.context.annotation.SessionScope;
-
-import java.util.Collection;
-
+import com.example.Rent_a_Car.model.entity.RoleEntity;
 
 
 public class UserDTO {
@@ -31,7 +24,7 @@ public class UserDTO {
 
     private AddressDTO addressDTO;
 
-    private Role role;
+    private RoleEntity roleEntity;
 
     public UserDTO() {
     }
@@ -108,12 +101,12 @@ public class UserDTO {
         this.addressDTO = addressDTO;
     }
 
-    public Role getRole() {
-        return role;
+    public RoleEntity getRole() {
+        return roleEntity;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRole(RoleEntity roleEntity) {
+        this.roleEntity = roleEntity;
     }
 
     @Override
@@ -128,7 +121,7 @@ public class UserDTO {
                 ", isAccountNonExpired=" + isAccountNonExpired +
                 ", isAccountNonLocked=" + isAccountNonLocked +
                 ", addressDTO=" + addressDTO +
-                ", role=" + role +
+                ", role=" + roleEntity +
                 '}';
     }
 }

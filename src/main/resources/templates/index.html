@@ -1,23 +1,75 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      th:fragment="html">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="~{fragments/head}">
     <title>Best Rent sa Car Company</title>
 </head>
+
 <body>
-<header th:replace="~{fragments/header}"></header>
+<div class="container">
+    <header th:replace="~{fragments/header}"></header>
+</div>
+<div class="container">
+    <section th:replace="~{fragments/banner}"></section>
+</div>
 
-<main class=" all">
-    <h1>Welcome, </h1>
-    <th:block sec:authorize="isAnonymous()">
-        <h3>Please Register or Login</h3>
-    </th:block>
+<div class="container">
+    <span sec:authorize="isAuthenticated()" th:text="|User : ${fullName}|">User Name</span>
+    <span sec:authorize="isAnonymous()">"You are a Guest !"</span>
+    <div class="container-form">
 
-    <th:block sec:authorize="isAuthenticated()">
-        <h3 th:text="${fullName}"></h3>
-    </th:block>
-</main>
+        <form th:method="POST"
+              th:action="@{/rent-car}"
+              th:object="${carForRent}">
+
+            <label for="modelId">Model</label>
+            <select id="modelId"
+                    th:name="modelId"
+                    th:errorclass="bg-error">
+                <option value="">- Select a model -</option>
+                <optgroup
+                        th:each="brand: ${brands}"
+                        th:label="${brand.name}">
+
+                    <option th:each="model : ${brand.model}"
+                            th:text="${model.name}"
+                            th:value="${model.id}"
+                            th:selected="*{modelId} == ${model.id}">
+                        Model
+                    </option>
+
+                </optgroup>
+            </select>
+
+
+            <label for="transmission">Transmission</label>
+            <select id="transmission"
+                    th:name="transmission"
+                    th:errorclass="bg-error">
+                <option value="">- Select Transmission -</option>
+                <option th:each=" t : ${T(com.example.Rent_a_Car.model.enums.TransmissionsEnum).values()}"
+                        th:text="${t}"
+                        th:value="${t}"
+                        th:selected="${t} == *{transmission}"/>
+            </select>
+
+            <label for="fuelType">Fuel Type</label>
+            <select id="fuelType"
+                    th:name="fuelType"
+                    th:errorclass="bg-error">
+                <option value="">- Select Fuel Type -</option>
+                <option th:each=" f : ${T(com.example.Rent_a_Car.model.enums.FuelTypeEnums).values()}"
+                        th:text="${f}"
+                        th:value="${f}"
+                        th:selected="${f} == *{fuelType}"/>
+            </select>
+
+            <input type="submit" class="btn btn-info btn-lg" value="-Get a Offer -"/>
+
+        </form>
+    </div>
+</div>
 </body>
+
 </html>

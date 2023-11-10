@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "roles")
-public class Role {
+public class RoleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -17,10 +17,10 @@ public class Role {
     private RoleEnum name;
 
 
-    public Role() {
+    public RoleEntity() {
     }
 
-    public Role( RoleEnum name) {
+    public RoleEntity(RoleEnum name) {
         this.name = name;
     }
 
@@ -30,7 +30,7 @@ public class Role {
         return id;
     }
 
-    public Role setId(long id) {
+    public RoleEntity setId(long id) {
         this.id = id;
         return this;
     }
@@ -39,7 +39,7 @@ public class Role {
         return name;
     }
 
-    public Role setName(RoleEnum name) {
+    public RoleEntity setName(RoleEnum name) {
         this.name = name;
         return this;
     }

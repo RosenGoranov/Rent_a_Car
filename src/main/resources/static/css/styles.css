@@ -1,3 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@400;800&display=swap');
+
+@media (max-width: 600px) {
+
+    .container-header {
+        flex-direction: column;
+
+    }
+
+    .container-header p {
+        width: 12ch;
+    }
+
+    body .container:nth-child(2) {
+        display: none;
+    }
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -9,139 +27,185 @@
 
 
 html {
-    font-family: 'Times New Roman', Times, sans-serif;
-    font-size: 16px;
+    font: 14px/1.5 Playpen, sans-serif;
+}
+
+img {
+    height: 100%;
+    width: auto;
 
 }
 
 body {
-    border-sizing: inherit;
-    margin: 1em;
-    padding: 1em;
-    background-color: #bdc3c7;
+    background-repeat: no-repeat;
+    background-image: url(../images/main-car.jpg);
+    background-size: cover;
+
 }
 
-.header {
+.container {
+    max-width: 1200px;
+    margin: 1em auto;
+}
+
+body .container:nth-child(1) {
+    max-width: 100%;
+    margin: 0 auto;
+
+}
+
+.container-header {
     display: flex;
-    flex-wrap: wrap;
-    background-color: aqua;
     justify-content: space-between;
-    border-radius: 5em;
-
+    align-items: center;
+    padding: 1em 2em;
+    background-color: rgb(240, 46, 46);
 }
 
-.navbar {
-    margin: 1em;
-    padding: 1em;
-    display: inline-flex;
-    flex-wrap: wrap;
-}
-
-.crumb {
+.container-header p {
     display: flex;
-    font-size: 1.2em;
-    margin: 0.4em;
-    padding: 0.6em;
-    border-radius: 2em;
-    background-color: black;
-    color: aqua;
+    align-items: center;
+    gap: 0.2em;
+    font-size: 2em;
+}
+
+.container-header p a {
     text-decoration: none;
-    align-items: center;
-    justify-content: center;
+    color: azure;
+}
+
+.container-header ul {
+    display: flex;
+    gap: 1.5em;
+}
+
+.container-header ul li,
+.container-header ul li a {
+    display: block;
+    text-decoration: none;
+    color: azure;
+    font-size: 1.1em;
+}
+
+.container-header input {
+    font-size: 1.1em;
+    background-color: rgb(240, 46, 46);
+    color: azure;
+    border: none;
     cursor: pointer;
-    min-height: 50px;
-    min-width: 120px;
-
 }
 
-.crumb:hover {
-    background: #d35400;
-    color: black;
-
-}
-
-.h-tag {
+.container-banner,
+.container-banner ul {
     display: flex;
-    font-family: cursive;
-    margin: 0.5em;
-    padding: 0.5em;
-    border: 0.5em;
+    justify-content: center;
+    flex-direction: row;
+    gap: 1.5em;
 }
 
-.main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2em;
-    margin: 2em;
-    border: solid #16a085;
-    flex-wrap: wrap;
-    background-image: url("/images/main-car.jpg");
-}
-
-.all {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2em;
-    margin: 2em;
-    border: solid #16a085;
-    flex-wrap: wrap;
-    background-color: #34495e;
-    color: black;
-    font-family: serif;
-}
-
-.box {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.5em;
-    margin: 0.5em;
-    border-radius: 0.5em;
-    border: solid #d35400;
-    color: #34495e;
-    background-color: azure;
-    width: 40%;
-    overflow: auto;
-}
-
-.label {
-    font-size: 1.2em;
-    font-family: cursive;
-    font-weight: bold
-}
-
-.select {
-    font-size: 0.8em;
-    font-family: cursive;
-    background-color: aqua;
-    padding: 0.5em;
-}
-
-.register {
-    flex-direction: column;
-    align-items: center;
+.container-banner li {
+    display: block;
+    width: 5em;
+    height: 5em;
     overflow: hidden;
-    font-size: 1.2em;
-    border: 1em solid;
-    border-radius: 1em;
-    margin: 1.5em;
+    border-radius: 0.5em;
+    box-shadow: 0 0 1em 0.5em rgba(0, 0, 0, 0.2);
+    transition: width 0.3s ease-in-out;
+    background-color: wheat;
+}
+
+.container-banner li:hover {
+    width: 15em;
+    height: 15em;
+}
+
+.container-banner li:hover img {
+    transform: translateX(0);
+}
+
+body .container:nth-child(3) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: azure;
+    background-image: url("../images/baner-car1.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    min-height: 10em;
 
 }
 
-.h2_register {
-    color: #0328fc;
-    margin-bottom: 1.5em;
+body .container:nth-child(3) span {
+    font-size: 2em;
+    font-style: italic;
+    color: white;
 }
 
-.form {
-    display: grid;
-    border: 0.2em solid;
+.container-form,
+form {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
     padding: 1em;
+    align-items: center;
+    gap: .5em;
 }
 
-.fetchDataButton {
+.form label {
     display: none;
 }
 
+.form input {
+    margin: .5em 0;
+}
 
+.button{
+    padding: 0;
+}
+
+select{
+min-width: 15em;
+}
+.bg-error {
+    background-color: red;
+}
+
+.container .container-admin {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    flex-direction: row;
+    background-color: white;
+    margin: 0 auto;
+
+}
+
+.container-admin section {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 30%;
+    align-items: center;
+    margin: 1em;
+    padding: 1em;
+    background-color: aqua;
+    border-radius: 1em;
+    min-height: 15em;
+}
+
+.container-admin section p {
+    display: flex;
+    font-size: 1.5em;
+    padding: 2em 0;
+    max-width: 25ch;
+    align-items: center;
+}
+
+.container-admin section p a{
+    text-decoration: none;
+    padding: 0.5em;
+    border-radius: 1em;
+    background-color: #BB8294FF;
+    color: azure;
+
+}

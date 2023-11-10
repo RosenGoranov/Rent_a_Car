@@ -4,44 +4,44 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       th:fragment="html">
 
-<head th:replace="~{fragments/head}"></head>
+<head th:replace="~{fragments/head}"><title>B</title></head>
 
 <body>
+<div class="container">
+    <header th:replace="~{fragments/header}"></header>
+</div>
+<div class="container">
+    <section th:replace="~{fragments/banner}"></section>
+</div>
 
-<header th:replace="~{fragments/header}"></header>
 
-<main class="main">
-
-    <div class="box register">
+<div class="container">
+    <div class="container-form">
 
         <h2 class="h2_register">Login</h2>
+
+
+        <p class="error" th:if="${bad_credentials}"> Invalid username or password.</p>
+
 
         <!-- Login form start-->
         <form class="form"
               th:method="post"
-              th:action="@{/auth/login}"
-              th:object="${loginRequest}">
+              th:action="@{/login}">
 
-            <label th:for="email">Email</label>
+            <label for="email">Email</label>
             <input type="text"
-                   id="username"
-                   name="username"
-                   th:value="${username}"
+                   id="email"
+                   name="email"
+                   th:value="${email}"
                    placeholder="Email"/>
-            <p class="errors alert alert-danger">
-                Email is required.
-            </p>
 
-            <label th:for="password">Password</label>
-            <input
-                   id="password"
+
+            <label for="password">Password</label>
+            <input id="password"
                    name="password"
                    type="password"
-                   class=""
                    placeholder="Password"/>
-            <p class="errors alert alert-danger">
-                 Password is required.
-            </p>
 
             <div class="row">
 
@@ -52,7 +52,7 @@
 
         </form>
     </div>
+</div>
 
-</main>
 </body>
 </html>

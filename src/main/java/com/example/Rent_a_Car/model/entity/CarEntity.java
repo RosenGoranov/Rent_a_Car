@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "cars")
-public class Car {
+public class CarEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,15 +17,15 @@ public class Car {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(nullable = false)
-    private Model model;
+    private ModelEntity model;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(nullable = false)
-    private Transmission transmission;
+    private TransmissionEntity transmission;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(nullable = false)
-    private FuelType fuelType;
+    private FuelTypeEntity fuelType;
 
     @Column(nullable = false)
     private String vinNumber;
@@ -47,55 +47,38 @@ public class Car {
 
     private boolean isReserved;
 
-    public Car() {
-    }
-
-    public Car(long id, Model model, Transmission transmission, FuelType fuelType, String vinNumber, String plate, LocalDate regDate, BigDecimal rentPerDay, String description, UserEntity userEntity, boolean isReserved) {
-        this.id = id;
-        this.model = model;
-        this.transmission = transmission;
-        this.fuelType = fuelType;
-        this.vinNumber = vinNumber;
-        this.plate = plate;
-        this.regDate = regDate;
-        this.rentPerDay = rentPerDay;
-        this.description = description;
-        this.userEntity = userEntity;
-        this.isReserved = isReserved;
-    }
-
     public long getId() {
         return id;
     }
 
-    public Car setId(long id) {
+    public CarEntity setId(long id) {
         this.id = id;
         return this;
     }
 
-    public Model getModel() {
+    public ModelEntity getModel() {
         return model;
     }
 
-    public Car setModel(Model model) {
+    public CarEntity setModel(ModelEntity model) {
         this.model = model;
         return this;
     }
 
-    public Transmission getTransmission() {
+    public TransmissionEntity getTransmission() {
         return transmission;
     }
 
-    public Car setTransmission(Transmission transmission) {
+    public CarEntity setTransmission(TransmissionEntity transmission) {
         this.transmission = transmission;
         return this;
     }
 
-    public FuelType getFuelType() {
+    public FuelTypeEntity getFuelType() {
         return fuelType;
     }
 
-    public Car setFuelType(FuelType fuelType) {
+    public CarEntity setFuelType(FuelTypeEntity fuelType) {
         this.fuelType = fuelType;
         return this;
     }
@@ -104,7 +87,7 @@ public class Car {
         return vinNumber;
     }
 
-    public Car setVinNumber(String vinNumber) {
+    public CarEntity setVinNumber(String vinNumber) {
         this.vinNumber = vinNumber;
         return this;
     }
@@ -113,7 +96,7 @@ public class Car {
         return plate;
     }
 
-    public Car setPlate(String plate) {
+    public CarEntity setPlate(String plate) {
         this.plate = plate;
         return this;
     }
@@ -122,7 +105,7 @@ public class Car {
         return regDate;
     }
 
-    public Car setRegDate(LocalDate regDate) {
+    public CarEntity setRegDate(LocalDate regDate) {
         this.regDate = regDate;
         return this;
     }
@@ -131,7 +114,7 @@ public class Car {
         return rentPerDay;
     }
 
-    public Car setRentPerDay(BigDecimal rentPerDay) {
+    public CarEntity setRentPerDay(BigDecimal rentPerDay) {
         this.rentPerDay = rentPerDay;
         return this;
     }
@@ -140,16 +123,16 @@ public class Car {
         return description;
     }
 
-    public Car setDescription(String description) {
+    public CarEntity setDescription(String description) {
         this.description = description;
         return this;
     }
 
-    public UserEntity getUser() {
+    public UserEntity getUserEntity() {
         return userEntity;
     }
 
-    public Car setUser(UserEntity userEntity) {
+    public CarEntity setUserEntity(UserEntity userEntity) {
         this.userEntity = userEntity;
         return this;
     }
@@ -158,7 +141,7 @@ public class Car {
         return isReserved;
     }
 
-    public Car setReserved(boolean reserved) {
+    public CarEntity setReserved(boolean reserved) {
         isReserved = reserved;
         return this;
     }

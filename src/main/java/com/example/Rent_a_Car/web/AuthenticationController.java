@@ -4,7 +4,7 @@ import com.example.Rent_a_Car.model.auth.AuthenticationRequest;
 import com.example.Rent_a_Car.model.auth.RegisterRequest;
 import com.example.Rent_a_Car.model.dto.AddressDTO;
 import com.example.Rent_a_Car.model.dto.UserDTO;
-import com.example.Rent_a_Car.services.UserService;
+import com.example.Rent_a_Car.services.impl.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -28,7 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class AuthenticationController {
 
     private static final String SPRING_ATTRIBUTE_REQUEST = "org.springframework.validation.BindingResult.registerRequest";
-    private static final String SPRING_ATTRIBUTE_ADDRESS = "org.springframework.validation.BindingResult.address";
+    private static final String SPRING_ATTRIBUTE_ADDRESS = "org.springframework.validation.BindingResult.addressDTO";
     private final UserService userService;
     private final SecurityContextRepository securityContextRepository;
 
@@ -47,7 +47,7 @@ public class AuthenticationController {
     }
 
 
-    @ModelAttribute(name = "address")
+    @ModelAttribute(name = "addressDTO")
     public AddressDTO initAddress() {
         return new AddressDTO();
     }
@@ -66,18 +66,21 @@ public class AuthenticationController {
     @PostMapping("/register")
     public String register(
             @Valid RegisterRequest registerRequest,
-            @Valid AddressDTO address,
-            BindingResult bindingResult,
+            BindingResult bindingResultUser,
+            @Valid AddressDTO addressDTO,
+            BindingResult bindingResultAddress,
             RedirectAttributes redirectAttributes,
             HttpServletRequest request,
             HttpServletResponse response
     ) {
-        if (bindingResult.hasErrors()) {
+        registerRequest.setAddressDTO(addressDTO);
+        if (bindingResultUser.hasErrors() || bindingResultAddress.hasErrors()) {
             redirectAttributes.addFlashAttribute("registerRequest", registerRequest);
-            redirectAttributes.addFlashAttribute(SPRING_ATTRIBUTE_REQUEST, bindingResult);
-            redirectAttributes.addFlashAttribute(SPRING_ATTRIBUTE_ADDRESS, bindingResult);
+            redirectAttributes.addFlashAttribute(SPRING_ATTRIBUTE_REQUEST, bindingResultUser);
+            redirectAttributes.addFlashAttribute("addressDTO", addressDTO);
+            redirectAttributes.addFlashAttribute(SPRING_ATTRIBUTE_ADDRESS, bindingResultAddress);
 
-            return "register";
+            return "redirect:/auth/register";
         }
         try {
             UserDTO byEmail = userService.getByEmail(registerRequest.getEmail());
@@ -87,7 +90,6 @@ public class AuthenticationController {
             }
 
         } catch (UsernameNotFoundException e) {
-            registerRequest.setAddressDTO(address);
             this.userService.save(registerRequest, successfulAuth -> {
                 SecurityContextHolderStrategy strategy = SecurityContextHolder.getContextHolderStrategy();
 
@@ -103,16 +105,16 @@ public class AuthenticationController {
         }
 
 
-        return "redirect:/auth/login";
+        return "redirect:/";
     }
 
 
     @GetMapping("/login")
     public String loginForm() {
-        return "login-pages";
+        return "login";
     }
 
-    @PostMapping("/auth/login-error")
+    @PostMapping("/login-error")
     public String onFailedLogin(
             @ModelAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY) String username,
             RedirectAttributes redirectAttributes) {
@@ -120,7 +122,7 @@ public class AuthenticationController {
         redirectAttributes.addFlashAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY, username);
         redirectAttributes.addFlashAttribute("bad_credentials", true);
 
-        return "redirect:/users/login";
+        return "redirect:/auth/login";
     }
 
 

@@ -8,11 +8,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.context.DelegatingSecurityContextRepository;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
@@ -31,35 +31,36 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(
                         authorize ->
                                 authorize.
-                                        requestMatchers("/static/**","/css/**", "/favicon/**", "/images/**", "/js/**")
+                                        requestMatchers("/static/**", "/css/**", "/favicon/**", "/images/**", "/js/**")
                                         .permitAll()
-                                        .requestMatchers("/", "/auth/login", "/auth/register", "/auth/login-error")
+                                        .requestMatchers("/", "/auth/login", "/auth/register", "/auth/login-error", "rent-car")
                                         .permitAll().
-                                        requestMatchers("/pages/user-pages").hasRole(RoleEnum.USER.name()).
-                                        requestMatchers("/pages/employee-pages").hasRole(RoleEnum.EMPLOYEE.name()).
-                                        requestMatchers("/pages/moderators-pages").hasRole(RoleEnum.MODERATOR.name()).
-                                        requestMatchers("/pages/admins-pages").hasRole(RoleEnum.ADMIN.name()).
+                                        requestMatchers("/user-page").hasRole(RoleEnum.USER.name()).
+                                        requestMatchers("/employee-page").hasRole(RoleEnum.EMPLOYEE.name()).
+                                        requestMatchers("/moderator-page").hasRole(RoleEnum.MODERATOR.name()).
+                                        requestMatchers("/admin-page").hasRole(RoleEnum.ADMIN.name()).
                                         anyRequest().authenticated()
                 )
                 .formLogin(
                         (formLogin) ->
                                 formLogin.
-                                        loginPage("/auth/login").
-                                        usernameParameter(
-                                                UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY).
-                                        passwordParameter(
-                                                UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY).
+                                        loginPage("/login").
+                                        usernameParameter("email").
+                                        passwordParameter("password").
                                         defaultSuccessUrl("/", true).
                                         failureForwardUrl("/auth/login-error")
                 )
                 .logout((logout) ->
-                        logout.logoutUrl("/auth/logout").
+                        logout.logoutUrl("/logout").
                                 logoutSuccessUrl("/").
                                 invalidateHttpSession(true)
-                ).securityContext(
+                )
+                .securityContext(
                         securityContext -> securityContext.
                                 securityContextRepository(securityContextRepository)
-                );
+                )
+                .sessionManagement((session) ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
 
         return http.build();
 

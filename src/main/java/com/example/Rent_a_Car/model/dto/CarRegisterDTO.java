@@ -1,10 +1,9 @@
 package com.example.Rent_a_Car.model.dto;
 
-import com.example.Rent_a_Car.model.entity.FuelType;
-import com.example.Rent_a_Car.model.entity.Model;
-import com.example.Rent_a_Car.model.entity.Transmission;
+import com.example.Rent_a_Car.model.entity.FuelTypeEntity;
+import com.example.Rent_a_Car.model.entity.ModelEntity;
+import com.example.Rent_a_Car.model.entity.TransmissionEntity;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 
 import java.math.BigDecimal;
@@ -14,13 +13,13 @@ import java.time.LocalDate;
 public class CarRegisterDTO {
 
     @NotBlank
-    private Model model;
+    private ModelEntity modelEntity;
 
     @NotBlank
-    private Transmission transmission;
+    private TransmissionEntity transmissionEntity;
 
     @NotBlank
-    private FuelType fuelType;
+    private FuelTypeEntity fuelTypeEntity;
 
     @NotBlank
     private String vinNumber;
@@ -40,17 +39,17 @@ public class CarRegisterDTO {
     public CarRegisterDTO() {
     }
 
-    public CarRegisterDTO(Model model,
-                          Transmission transmission,
-                          FuelType fuelType,
+    public CarRegisterDTO(ModelEntity modelEntity,
+                          TransmissionEntity transmissionEntity,
+                          FuelTypeEntity fuelTypeEntity,
                           String vinNumber,
                           String plate,
                           LocalDate regDate,
                           BigDecimal rentPerDay,
                           String description) {
-        this.model = model;
-        this.transmission = transmission;
-        this.fuelType = fuelType;
+        this.modelEntity = modelEntity;
+        this.transmissionEntity = transmissionEntity;
+        this.fuelTypeEntity = fuelTypeEntity;
         this.vinNumber = vinNumber;
         this.plate = plate;
         this.regDate = regDate;
@@ -58,30 +57,30 @@ public class CarRegisterDTO {
         this.description = description;
     }
 
-    public Model getModel() {
-        return model;
+    public ModelEntity getModel() {
+        return modelEntity;
     }
 
-    public CarRegisterDTO setModel(Model model) {
-        this.model = model;
+    public CarRegisterDTO setModel(ModelEntity modelEntity) {
+        this.modelEntity = modelEntity;
         return this;
     }
 
-    public Transmission getTransmission() {
-        return transmission;
+    public TransmissionEntity getTransmission() {
+        return transmissionEntity;
     }
 
-    public CarRegisterDTO setTransmission(Transmission transmission) {
-        this.transmission = transmission;
+    public CarRegisterDTO setTransmission(TransmissionEntity transmissionEntity) {
+        this.transmissionEntity = transmissionEntity;
         return this;
     }
 
-    public FuelType getFuelType() {
-        return fuelType;
+    public FuelTypeEntity getFuelType() {
+        return fuelTypeEntity;
     }
 
-    public CarRegisterDTO setFuelType(FuelType fuelType) {
-        this.fuelType = fuelType;
+    public CarRegisterDTO setFuelType(FuelTypeEntity fuelTypeEntity) {
+        this.fuelTypeEntity = fuelTypeEntity;
         return this;
     }
 

@@ -1,17 +1,18 @@
-package com.example.Rent_a_Car.services;
+package com.example.Rent_a_Car.services.impl;
 
 
 import com.example.Rent_a_Car.model.auth.RegisterRequest;
 import com.example.Rent_a_Car.model.dto.UserDTO;
-import com.example.Rent_a_Car.model.entity.Address;
-import com.example.Rent_a_Car.model.entity.Role;
+import com.example.Rent_a_Car.model.entity.AddressEntity;
+import com.example.Rent_a_Car.model.entity.RoleEntity;
+import com.example.Rent_a_Car.model.entity.TownEntity;
 import com.example.Rent_a_Car.model.entity.UserEntity;
 import com.example.Rent_a_Car.model.enums.RoleEnum;
 import com.example.Rent_a_Car.repository.RoleRepository;
+import com.example.Rent_a_Car.repository.TownRepository;
 import com.example.Rent_a_Car.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,22 +33,21 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final AddressService addressService;
+    private final TownRepository townRepository;
     private final ModelMapper modelMapper;
-    private PasswordEncoder passwordEncoder;
-    private RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
     private final UserDetailsService userDetailsService;
 
-    @Autowired
-    public UserService(UserRepository userRepository, AddressService addressService, ModelMapper modelMapper, PasswordEncoder passwordEncoder, RoleRepository roleRepository, UserDetailsService userDetailsService) {
+    public UserService(UserRepository userRepository, TownRepository townRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, RoleRepository roleRepository, UserDetailsService userDetailsService) {
         this.userRepository = userRepository;
-        this.addressService = addressService;
+        this.townRepository = townRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
-
         this.userDetailsService = userDetailsService;
     }
+
 
     public UserDTO getByEmail(String email) throws RuntimeException {
         Optional<UserEntity> optional = this.userRepository.findByEmail(email);
@@ -66,25 +66,27 @@ public class UserService {
         if (optionalUser.isPresent()) {
             return false;
         }
-        Address address = this.addressService.getAddress(
-                userDTO.getAddressDTO().getTown(),
-                userDTO.getAddressDTO().getStreet(),
-                userDTO.getAddressDTO().getNumber());
+        Optional<TownEntity> optionalTown = this.townRepository.findByName(
+                userDTO.getAddressDTO().getTown());
+        if (optionalTown.isEmpty()){
+            optionalTown.get().setName(request.getAddressDTO().getTown());
+        }
 
-        ModelMapper modelMapper = new ModelMapper();
         UserEntity userEntity = modelMapper.map(userDTO, UserEntity.class);
         if (this.roleRepository.count() == 0) {
-            List<Role> roles = new ArrayList<>(List.of(
-                    new Role(RoleEnum.ADMIN),
-                    new Role(RoleEnum.MODERATOR),
-                    new Role(RoleEnum.EMPLOYEE),
-                    new Role(RoleEnum.USER)
+            List<RoleEntity> roleEntities = new ArrayList<>(List.of(
+                    new RoleEntity(RoleEnum.ADMIN),
+                    new RoleEntity(RoleEnum.MODERATOR),
+                    new RoleEntity(RoleEnum.EMPLOYEE),
+                    new RoleEntity(RoleEnum.USER)
             ));
-            userEntity.setRole(roles);
-        }else {
+            userEntity.setRole(roleEntities);
+        } else {
             userEntity.setRole(new ArrayList<>(List.of(this.roleRepository.findByName(RoleEnum.USER))));
         }
-        userEntity.setAddress(address);
+        userEntity.setAddress(new AddressEntity().setTown(optionalTown.get())
+                .setStreet(request.getAddressDTO().getStreet())
+                .setNumber(request.getAddressDTO().getNumber()));
         this.userRepository.save(userEntity);
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
 

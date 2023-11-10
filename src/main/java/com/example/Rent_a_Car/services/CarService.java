@@ -1,34 +1,15 @@
 package com.example.Rent_a_Car.services;
 
-
-import com.example.Rent_a_Car.model.dto.RentCarDTO;
-import com.example.Rent_a_Car.repository.CarRepository;
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Service;
+import com.example.Rent_a_Car.model.dto.CarForRentDTO;
+import com.example.Rent_a_Car.model.dto.RentCarUserModel;
 
 import java.util.List;
 
-@Service
+public interface CarService {
 
-public class CarService {
+    List<CarForRentDTO> getAllCar();
 
-    private final CarRepository carRepository;
-    private final ModelMapper modelMapper;
+    CarForRentDTO rent(RentCarUserModel rentCarUserModel, long id);
 
-    public CarService(CarRepository carRepository) {
-        this.carRepository = carRepository;
-        this.modelMapper = new ModelMapper();
-    }
-
-
-    public List<RentCarDTO> findAll(String brand) {
-
-
-        return carRepository.findAllByModelBrandName(brand)
-                .stream().
-                map(car -> modelMapper.map(car, RentCarDTO.class))
-                .toList();
-    }
-
-
+    void create(CarForRentDTO carForRentDTO);
 }

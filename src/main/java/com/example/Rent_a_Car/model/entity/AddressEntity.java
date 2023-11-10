@@ -5,50 +5,44 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "addresses")
-public class Address {
+public class AddressEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
-    private Town town;
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST,optional = false)
+    private TownEntity town;
 
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
-    private Street street;
+    @Column( nullable = true)
+    private String street;
 
     @Column(nullable = false)
     private String number;
 
 
-
-
-
-
-
-    public static Address builder() {
-        return new Address();
-    }
-
     public long getId() {
         return id;
     }
 
+    public AddressEntity setId(long id) {
+        this.id = id;
+        return this;
+    }
 
-
-    public Town getTown() {
+    public TownEntity getTown() {
         return town;
     }
 
-    public Address setTown(Town town) {
+    public AddressEntity setTown(TownEntity town) {
         this.town = town;
         return this;
     }
 
-    public Street getStreet() {
+    public String getStreet() {
         return street;
     }
 
-    public Address setStreet(Street street) {
+    public AddressEntity setStreet(String street) {
         this.street = street;
         return this;
     }
@@ -57,7 +51,7 @@ public class Address {
         return number;
     }
 
-    public Address setNumber(String number) {
+    public AddressEntity setNumber(String number) {
         this.number = number;
         return this;
     }

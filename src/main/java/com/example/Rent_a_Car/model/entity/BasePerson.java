@@ -3,7 +3,6 @@ package com.example.Rent_a_Car.model.entity;
 import jakarta.persistence.*;
 
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -30,7 +29,7 @@ public abstract class BasePerson {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(nullable = false)
-    private Address address;
+    private AddressEntity addressEntity;
 
 
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
@@ -39,7 +38,7 @@ public abstract class BasePerson {
             joinColumns = { @JoinColumn(name = "user_id") },
             inverseJoinColumns = { @JoinColumn(name = "role_id") }
     )
-    private Collection<Role> role;
+    private Collection<RoleEntity> roleEntity;
 
 
     public long getId() {
@@ -87,21 +86,21 @@ public abstract class BasePerson {
         return this;
     }
 
-    public Address getAddress() {
-        return address;
+    public AddressEntity getAddress() {
+        return addressEntity;
     }
 
-    public BasePerson setAddress(Address address) {
-        this.address = address;
+    public BasePerson setAddress(AddressEntity addressEntity) {
+        this.addressEntity = addressEntity;
         return this;
     }
 
-    public Collection<Role> getRole() {
-        return role;
+    public Collection<RoleEntity> getRole() {
+        return roleEntity;
     }
 
-    public BasePerson setRole(Collection<Role> role) {
-        this.role = role;
+    public BasePerson setRole(Collection<RoleEntity> roleEntity) {
+        this.roleEntity = roleEntity;
         return this;
     }
 

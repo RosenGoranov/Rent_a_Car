@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "transmissions")
-public class Transmission {
+public class TransmissionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -17,10 +17,10 @@ public class Transmission {
     @Column(nullable = false)
     private TransmissionsEnum name;
 
-    public Transmission() {
+    public TransmissionEntity() {
     }
 
-    public Transmission(long id, TransmissionsEnum name) {
+    public TransmissionEntity(long id, TransmissionsEnum name) {
         this.id = id;
         this.name = name;
     }
@@ -29,7 +29,7 @@ public class Transmission {
         return id;
     }
 
-    public Transmission setId(long id) {
+    public TransmissionEntity setId(long id) {
         this.id = id;
         return this;
     }
@@ -38,7 +38,7 @@ public class Transmission {
         return name;
     }
 
-    public Transmission setName(TransmissionsEnum name) {
+    public TransmissionEntity setName(TransmissionsEnum name) {
         this.name = name;
         return this;
     }

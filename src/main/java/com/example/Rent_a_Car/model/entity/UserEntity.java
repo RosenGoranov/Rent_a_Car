@@ -20,9 +20,6 @@ public class UserEntity extends BasePerson {
     private boolean isAccountNonLocked;
 
 
-    public UserEntity() {
-        super();
-    }
 
     public boolean isAccountNonExpired() {
         return isAccountNonExpired;

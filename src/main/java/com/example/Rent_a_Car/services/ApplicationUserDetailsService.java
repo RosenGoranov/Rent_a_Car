@@ -1,6 +1,6 @@
 package com.example.Rent_a_Car.services;
 
-import com.example.Rent_a_Car.model.entity.Role;
+import com.example.Rent_a_Car.model.entity.RoleEntity;
 import com.example.Rent_a_Car.model.entity.UserEntity;
 import com.example.Rent_a_Car.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,15 +29,16 @@ public class ApplicationUserDetailsService implements UserDetailsService {
     }
 
     private UserDetails map(UserEntity userEntity) {
-        String address = userEntity.getAddress().getTown().getName()+"\n"+
-                userEntity.getAddress().getStreet().getName()+"\n"+
+        String address = userEntity.getAddress().getTown() + "\n" +
+                userEntity.getAddress().getStreet() + "\n" +
                 userEntity.getAddress().getNumber();
         return new AppUserDetail(
                 userEntity.getEmail(),
                 userEntity.getPassword(),
                 extractAuthorities(userEntity))
+                .setId(userEntity.getId())
                 .setFullName(
-                        userEntity.getFirstName() +" "+ userEntity.getLastName()
+                        userEntity.getFirstName() + " " + userEntity.getLastName()
                 )
                 .setAddress(address);
     }
@@ -47,7 +48,7 @@ public class ApplicationUserDetailsService implements UserDetailsService {
 
     }
 
-    private GrantedAuthority mapRole(Role userRole) {
-        return new SimpleGrantedAuthority("ROLE_" + userRole.getName().name());
+    private GrantedAuthority mapRole(RoleEntity userRoleEntity) {
+        return new SimpleGrantedAuthority("ROLE_" + userRoleEntity.getName().name());
     }
 }
