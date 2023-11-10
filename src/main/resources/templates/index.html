@@ -1,75 +1,77 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="~{fragments/head}">
-    <title>Best Rent sa Car Company</title>
-</head>
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head}"></head>
 
 <body>
-<div class="container">
-    <header th:replace="~{fragments/header}"></header>
-</div>
-<div class="container">
-    <section th:replace="~{fragments/banner}"></section>
-</div>
 
-<div class="container">
-    <span sec:authorize="isAuthenticated()" th:text="|User : ${fullName}|">User Name</span>
-    <span sec:authorize="isAnonymous()">"You are a Guest !"</span>
-    <div class="container-form">
+<header th:replace="~{fragments/header}" ></header>
 
-        <form th:method="POST"
-              th:action="@{/rent-car}"
-              th:object="${carForRent}">
-
-            <label for="modelId">Model</label>
-            <select id="modelId"
-                    th:name="modelId"
-                    th:errorclass="bg-error">
-                <option value="">- Select a model -</option>
-                <optgroup
-                        th:each="brand: ${brands}"
-                        th:label="${brand.name}">
-
-                    <option th:each="model : ${brand.model}"
-                            th:text="${model.name}"
-                            th:value="${model.id}"
-                            th:selected="*{modelId} == ${model.id}">
-                        Model
-                    </option>
-
-                </optgroup>
-            </select>
-
-
-            <label for="transmission">Transmission</label>
-            <select id="transmission"
-                    th:name="transmission"
-                    th:errorclass="bg-error">
-                <option value="">- Select Transmission -</option>
-                <option th:each=" t : ${T(com.example.Rent_a_Car.model.enums.TransmissionsEnum).values()}"
-                        th:text="${t}"
-                        th:value="${t}"
-                        th:selected="${t} == *{transmission}"/>
-            </select>
-
-            <label for="fuelType">Fuel Type</label>
-            <select id="fuelType"
-                    th:name="fuelType"
-                    th:errorclass="bg-error">
-                <option value="">- Select Fuel Type -</option>
-                <option th:each=" f : ${T(com.example.Rent_a_Car.model.enums.FuelTypeEnums).values()}"
-                        th:text="${f}"
-                        th:value="${f}"
-                        th:selected="${f} == *{fuelType}"/>
-            </select>
-
-            <input type="submit" class="btn btn-info btn-lg" value="-Get a Offer -"/>
-
-        </form>
+<main class="main">
+    <div class="box model">
+        <Label class="label brand">Select Brand</Label>
+        <select class="select brand">
+            <option value="">--Please choose an option--</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+        </select>
     </div>
-</div>
+    <div class="box">
+        <Label class="label model">Select Model</Label>
+        <select class="select model">
+            <option value="">--Please choose an option--</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+        </select>
+    </div>
+    <div class="box">
+        <Label class="label model">Select Fuel type</Label>
+        <select class="select model">
+            <option value="">--Please choose an option--</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+        </select>
+    </div>
+
+    <div class="box">
+        <Label class="label model">Select Transmission</Label>
+        <select class="select model">
+            <option value="">--Please choose an option--</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+        </select>
+    </div>
+
+    <div class="box">
+        <Label class="label model" id="select-model">Select Date and Time</Label>
+        <input class="select"
+               type="datetime-local"
+               id="datetime"
+               min=""
+               name="datetime"
+               required/>
+    </div>
+
+
+</main>
+
 </body>
 
 </html>

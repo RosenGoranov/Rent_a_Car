@@ -1,105 +1,92 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      th:fragment="html">
+      xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{fragments/head}">
-    <title>Best Rent sa Car Company</title>
-</head>
+<head th:replace="~{fragments/head}"></head>
 
 <body>
 
 <header th:replace="~{fragments/header}"></header>
 
-<div class="container">
-    <section th:replace="~{fragments/banner}" ></section>
-</div>
+<main class="main">
 
-
-<div class="container">
-
-    <div class="container-form">
+    <div class="box register">
 
         <h2 class="h2_register">Register User</h2>
 
         <!-- Registration form start-->
         <form class="form"
-              th:method="post"
-              th:action="@{/auth/register}"
-              th:object="${registerRequest}">
+                th:method="post"
+                th:action="@{/auth/register}"
+                th:object="${registerRequest}">
 
-            <label for="firstName">First Name</label>
+            <label th:for="firstName">First Name</label>
             <input type="text"
-                   id="firstName"
                    th:field="*{firstName}"
-                   th:errorclass="bg-error"
+                   th:class="${#fields.hasErrors('firstName')}? fieldError"
                    placeholder="First name"/>
+            <p class="errors alert alert-danger">
+                First name is required.
+            </p>
 
-            <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="error">Error</p>
-
-            <label for="lastName">Last Name</label>
+            <label th:for="lastName">Last Name</label>
             <input type="text"
-                   id="lastName"
                    th:field="*{lastName}"
-                   th:errorclass="bg-error"
+                   class=""
                    placeholder="Last name"/>
-            <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="error">Error</p>
+            <p class="errors alert alert-danger">
+                Last name is required.
+            </p>
 
-            <label for="email" class="">Email</label>
+            <label th:for="email" class="">Email</label>
             <input type="text"
-                   id="email"
                    th:field="*{email}"
-                   th:errorclass="bg-error"
                    placeholder="Email"/>
-            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error">Error</p>
+            <p class="errors alert alert-danger">
+                Email is required.
+            </p>
 
-
-            <label for="password" class="">Email</label>
+            <label th:for="password" class="">Email</label>
             <input type="password"
-                   id="password"
                    th:field="*{password}"
-                   th:errorclass="bg-error"
                    placeholder="Password"/>
-            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error">Error</p>
+            <p class="errors alert alert-danger">
+                Password is required.
+            </p>
 
-            <label for="confirmPassword" class="">Email</label>
+            <label th:for="confirmPassword" class="">Email</label>
             <input type="password"
-                   id="confirmPassword"
                    th:field="*{confirmPassword}"
-                   th:errorclass="bg-error"
                    placeholder="Confirm Password"/>
-            <p th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" class="error">Error</p>
+            <p class="errors alert alert-danger">
+                Password is required.
+            </p>
 
+            <div class="form" th:object="${address}">
 
-            <div class="form" th:object="${addressDTO}">
+            <label th:for="town" class="">Address</label>
+            <input type="text"
+                   th:field="*{town}"
+                   placeholder="Town"/>
+            <p class="errors alert alert-danger">
+                Town is required.
+            </p>
 
-                <label for="town" class="">Town</label>
-                <input type="text"
-                       id="town"
-                       th:field="*{town}"
-                       th:errorclass="bg-error"
-                       placeholder="Town"/>
-                <p th:if="${#fields.hasErrors('town')}" th:errors="*{town}" class="error">Error</p>
+            <label th:for="street" class="">Street</label>
+            <input type="text"
+                   th:field="*{street}"
+                   placeholder="Street"/>
+            <p class="errors alert alert-danger">
+                Street is required.
+            </p>
 
-
-                <label for="street" class="">Street</label>
-                <input type="text"
-                       id="street"
-                       th:field="*{street}"
-                       th:errorclass="bg-error"
-                       placeholder="Street"/>
-                <p th:if="${#fields.hasErrors('street')}" th:errors="*{street}" class="error">Error</p>
-
-
-                <label for="number" class="">Number</label>
-                <input type="text"
-                       id="number"
-                       th:field="*{number}"
-                       th:errorclass="bg-error"
-                       placeholder="Number"/>
-                <p th:if="${#fields.hasErrors('number')}" th:errors="*{number}" class="error">Error</p>
-
+            <label th:for="number" class="">Number</label>
+            <input type="text"
+                   th:field="*{number}"
+                   placeholder="Number"/>
+            <p class="errors alert alert-danger">
+                Number is required.
+            </p>
 
             </div>
 
@@ -112,6 +99,7 @@
 
         </form>
     </div>
-</div>
+
+</main>
 </body>
 </html>

@@ -4,23 +4,15 @@ spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/rent_a_car?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
-    username: ${db_username}
-    password: ${db_password}
+    username: root
+    password: 1234
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
   mvc:
-    hidden-method:
+    hiddenmethod:
       filter:
         enabled: true
-  thymeleaf: # Thymeleaf
-    cache: false
-    mode: HTML
-    encoding: UTF-8
-    prefix: file:src/main/resources/templates/
-    resources: # Static resources
-      static-locations: file:src/main/resources/static/
-      cache:
-        period: 0
+
 
