@@ -2,6 +2,7 @@ package com.example.Rent_a_Car.services.impl;
 
 
 import com.example.Rent_a_Car.model.dto.CarForRentDTO;
+import com.example.Rent_a_Car.model.dto.CarRegisterDTO;
 import com.example.Rent_a_Car.model.dto.RentCarUserModel;
 import com.example.Rent_a_Car.model.entity.CarEntity;
 import com.example.Rent_a_Car.model.entity.UserEntity;
@@ -9,7 +10,6 @@ import com.example.Rent_a_Car.model.enums.FuelTypeEnums;
 import com.example.Rent_a_Car.model.enums.TransmissionsEnum;
 import com.example.Rent_a_Car.repository.*;
 import com.example.Rent_a_Car.services.CarService;
-import org.hibernate.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -59,8 +59,9 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public void create(CarForRentDTO carForRentDTO) {
-//todo
+    public void create(CarRegisterDTO carRegisterDTO) {
+        CarEntity car = modelMapper.map(carRegisterDTO, CarEntity.class);
+        this.carRepository.save(car);
     }
 
 
