@@ -2,17 +2,13 @@ package com.example.Rent_a_Car.services;
 
 
 import com.example.Rent_a_Car.model.auth.AuthenticationRequest;
-import com.example.Rent_a_Car.model.auth.AuthenticationResponse;
 import com.example.Rent_a_Car.model.auth.RegisterRequest;
 import com.example.Rent_a_Car.model.dto.AddressDTO;
 import com.example.Rent_a_Car.model.dto.UserDTO;
-import com.example.Rent_a_Car.model.entity.Role;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.AssertTrue;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

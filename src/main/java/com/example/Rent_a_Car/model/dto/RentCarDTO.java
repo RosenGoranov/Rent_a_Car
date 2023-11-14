@@ -1,15 +1,10 @@
 package com.example.Rent_a_Car.model.dto;
 
-import com.example.Rent_a_Car.model.entity.FuelType;
-import com.example.Rent_a_Car.model.entity.Model;
-import com.example.Rent_a_Car.model.entity.Transmission;
 import com.example.Rent_a_Car.model.entity.User;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 
 public class RentCarDTO {

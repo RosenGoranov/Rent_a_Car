@@ -1,7 +1,6 @@
 package com.example.Rent_a_Car.web.mvccontroller;
 
 import com.example.Rent_a_Car.model.auth.AuthenticationRequest;
-import com.example.Rent_a_Car.model.auth.AuthenticationResponse;
 import com.example.Rent_a_Car.model.auth.RegisterRequest;
 import com.example.Rent_a_Car.model.dto.AddressDTO;
 import com.example.Rent_a_Car.model.dto.UserDTO;
