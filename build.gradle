@@ -28,6 +28,7 @@ dependencies {
 	implementation 'com.google.guava:guava:32.1.2-jre'
 	// https://mvnrepository.com/artifact/org.modelmapper/modelmapper
 	implementation 'org.modelmapper:modelmapper:3.1.1'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 
 
 

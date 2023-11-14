@@ -1,9 +1,11 @@
 package com.example.Rent_a_Car.model.dto;
 
-import com.example.Rent_a_Car.model.entity.FuelTypeEntity;
-import com.example.Rent_a_Car.model.entity.ModelEntity;
-import com.example.Rent_a_Car.model.entity.TransmissionEntity;
-import jakarta.validation.constraints.NotBlank;
+import com.example.Rent_a_Car.model.enums.FuelTypeEnums;
+import com.example.Rent_a_Car.model.enums.TransmissionsEnum;
+import com.example.Rent_a_Car.valodations.NotBlankEnum;
+import com.example.Rent_a_Car.valodations.NotBlankPrice;
+import jakarta.validation.constraints.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 import java.math.BigDecimal;
@@ -12,75 +14,70 @@ import java.time.LocalDate;
 
 public class CarRegisterDTO {
 
-    @NotBlank
-    private ModelEntity modelEntity;
+    @NotBlank(message = " Brand cannot be blank")
+    private String brand;
 
-    @NotBlank
-    private TransmissionEntity transmissionEntity;
+    @NotBlank(message = "Model cannot be blank")
+    private String model;
 
-    @NotBlank
-    private FuelTypeEntity fuelTypeEntity;
+    @NotNull
+    private TransmissionsEnum transmission;
 
-    @NotBlank
+    @NotNull
+    private FuelTypeEnums fuelType;
+
+    @NotBlank(message = "Vin Number cannot be blank")
     private String vinNumber;
 
-    @NotBlank
+    @NotBlank(message = "The Registration Plate cannot be blank")
+    @Pattern(regexp = "[A-Z]{2}[0-9]{4}[A-Z]{2}", message = "The Registration plate is not valid")
     private String plate;
 
-    @NotBlank
+    @NotNull
+    @PastOrPresent
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate regDate;
 
-    @NotBlank
+    @Positive
+    @NotBlankPrice
     private BigDecimal rentPerDay;
 
-    @NotBlank
+
     private String description;
 
-    public CarRegisterDTO() {
+    public String getBrand() {
+        return brand;
     }
 
-    public CarRegisterDTO(ModelEntity modelEntity,
-                          TransmissionEntity transmissionEntity,
-                          FuelTypeEntity fuelTypeEntity,
-                          String vinNumber,
-                          String plate,
-                          LocalDate regDate,
-                          BigDecimal rentPerDay,
-                          String description) {
-        this.modelEntity = modelEntity;
-        this.transmissionEntity = transmissionEntity;
-        this.fuelTypeEntity = fuelTypeEntity;
-        this.vinNumber = vinNumber;
-        this.plate = plate;
-        this.regDate = regDate;
-        this.rentPerDay = rentPerDay;
-        this.description = description;
-    }
-
-    public ModelEntity getModel() {
-        return modelEntity;
-    }
-
-    public CarRegisterDTO setModel(ModelEntity modelEntity) {
-        this.modelEntity = modelEntity;
+    public CarRegisterDTO setBrand(String brand) {
+        this.brand = brand;
         return this;
     }
 
-    public TransmissionEntity getTransmission() {
-        return transmissionEntity;
+    public String getModel() {
+        return model;
     }
 
-    public CarRegisterDTO setTransmission(TransmissionEntity transmissionEntity) {
-        this.transmissionEntity = transmissionEntity;
+    public CarRegisterDTO setModel(String model) {
+        this.model = model;
         return this;
     }
 
-    public FuelTypeEntity getFuelType() {
-        return fuelTypeEntity;
+    public TransmissionsEnum getTransmission() {
+        return transmission;
     }
 
-    public CarRegisterDTO setFuelType(FuelTypeEntity fuelTypeEntity) {
-        this.fuelTypeEntity = fuelTypeEntity;
+    public CarRegisterDTO setTransmission(TransmissionsEnum transmission) {
+        this.transmission = transmission;
+        return this;
+    }
+
+    public FuelTypeEnums getFuelType() {
+        return fuelType;
+    }
+
+    public CarRegisterDTO setFuelType(FuelTypeEnums fuelType) {
+        this.fuelType = fuelType;
         return this;
     }
 

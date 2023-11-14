@@ -45,12 +45,12 @@ body {
 
 .container {
     max-width: 1200px;
-    margin: 1em auto;
+    margin: 0 auto;
 }
 
 body .container:nth-child(1) {
     max-width: 100%;
-    margin: 0 auto;
+    background-color: rgb(240, 46, 46);
 
 }
 
@@ -58,8 +58,8 @@ body .container:nth-child(1) {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: 0 auto;
     padding: 1em 2em;
-    background-color: rgb(240, 46, 46);
 }
 
 .container-header p {
@@ -76,6 +76,7 @@ body .container:nth-child(1) {
 
 .container-header ul {
     display: flex;
+    align-items: center;
     gap: 1.5em;
 }
 
@@ -127,7 +128,6 @@ body .container:nth-child(3) {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: azure;
     background-image: url("../images/baner-car1.jpg");
     background-repeat: no-repeat;
     background-position: center;
@@ -152,23 +152,34 @@ form {
     gap: .5em;
 }
 
+.container-form form div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5em;
+}
+
 .form label {
     display: none;
 }
 
-.form input {
+.form input, .form select {
     margin: .5em 0;
+    min-width: 15em;
 }
 
-.button{
+.button {
     padding: 0;
 }
 
-select{
-min-width: 15em;
+select {
+    min-width: 15em;
 }
+
 .bg-error {
+    padding: .5em;
     background-color: red;
+    color: azure;
 }
 
 .container .container-admin {
@@ -201,7 +212,7 @@ min-width: 15em;
     align-items: center;
 }
 
-.container-admin section p a{
+.container-admin section p a {
     text-decoration: none;
     padding: 0.5em;
     border-radius: 1em;

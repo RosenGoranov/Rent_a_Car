@@ -4,29 +4,47 @@ package com.example.Rent_a_Car.services.impl;
 import com.example.Rent_a_Car.model.dto.CarForRentDTO;
 import com.example.Rent_a_Car.model.dto.CarRegisterDTO;
 import com.example.Rent_a_Car.model.dto.RentCarUserModel;
-import com.example.Rent_a_Car.model.entity.CarEntity;
-import com.example.Rent_a_Car.model.entity.UserEntity;
+import com.example.Rent_a_Car.model.entity.*;
 import com.example.Rent_a_Car.model.enums.FuelTypeEnums;
 import com.example.Rent_a_Car.model.enums.TransmissionsEnum;
 import com.example.Rent_a_Car.repository.*;
 import com.example.Rent_a_Car.services.CarService;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CarServiceImpl implements CarService {
 
     private final CarRepository carRepository;
     private final ModelMapper modelMapper;
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
+    private final BrandRepository brandRepository;
 
-    public CarServiceImpl(CarRepository carRepository, UserRepository userRepository, ModelRepository modelRepository, TransmissionRepository transmissionRepository, FuelTypeRepository fuelTypeRepository) {
+    private final ModelRepository modelRepository;
+
+    private final TransmissionRepository transmissionRepository;
+
+    private final FuelTypeRepository fuelTypeRepository;
+
+    public CarServiceImpl(CarRepository carRepository,
+                          ModelMapper modelMapper,
+                          UserRepository userRepository,
+                          BrandRepository brandRepository,
+                          ModelRepository modelRepository,
+                          TransmissionRepository transmissionRepository,
+                          FuelTypeRepository fuelTypeRepository) {
         this.carRepository = carRepository;
+        this.modelMapper = modelMapper;
         this.userRepository = userRepository;
-        this.modelMapper = new ModelMapper();
+        this.brandRepository = brandRepository;
+        this.modelRepository = modelRepository;
+        this.transmissionRepository = transmissionRepository;
+        this.fuelTypeRepository = fuelTypeRepository;
     }
 
 
@@ -59,8 +77,47 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public void create(CarRegisterDTO carRegisterDTO) {
-        CarEntity car = modelMapper.map(carRegisterDTO, CarEntity.class);
+    @Transactional
+    public void addNewCar(CarRegisterDTO carRegisterDTO) {
+        Optional<BrandEntity> optionalBrand = this.brandRepository.findByName(carRegisterDTO.getBrand());
+        TransmissionEntity transmission = this.transmissionRepository.findByName(carRegisterDTO.getTransmission());
+        FuelTypeEntity fuelType = this.fuelTypeRepository.findByName(carRegisterDTO.getFuelType());
+
+        CarEntity car = modelMapper.map(carRegisterDTO, CarEntity.class)
+                .setTransmission(transmission)
+                .setFuelType(fuelType)
+                .setReserved(false);
+
+        if (optionalBrand.isPresent()) {
+            ModelEntity model = optionalBrand.get()
+                    .getModels()
+                    .stream()
+                    .filter(modelEntity -> modelEntity.getName()
+                            .equals(carRegisterDTO.getModel()))
+                    .findFirst()
+                    .orElse(new ModelEntity().setName(carRegisterDTO.getModel()));
+            model.setBrand(optionalBrand.get());
+            car.setModel(model);
+
+        } else {
+            BrandEntity brandEntity = new BrandEntity()
+                    .setName(carRegisterDTO.getBrand());
+            Optional<ModelEntity> optionalModel = this.modelRepository.findByName(carRegisterDTO.getModel());
+            if (optionalModel.isPresent()){
+                brandEntity.addModel(optionalModel.get());
+                optionalModel.get().setBrand(brandEntity);
+                car.setModel(optionalModel.get());
+            }else {
+                ModelEntity model = new ModelEntity().setName(carRegisterDTO.getModel());
+                brandEntity.addModel(model);
+                model.setBrand(brandEntity);
+                car.setModel(model);
+            }
+
+
+        }
+
+
         this.carRepository.save(car);
     }
 

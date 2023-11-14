@@ -5,88 +5,99 @@
 <head th:replace="~{fragments/head}"></head>
 
 <body>
+<div class="container">
+    <header th:replace="~{fragments/header}"></header>
+</div>
 
-<header th:replace="~{fragments/header}"></header>
+<div class="container">
+    <section th:replace="~{fragments/banner}"></section>
+</div>
 
-<main class="main">
+<div class="container">
 
-    <div class="box register">
+    <div class="container-form">
 
         <h2 class="h2_register">Register User</h2>
 
         <!-- Registration form start-->
-        <form class="form"
-                th:method="post"
-                th:action="@{/auth/register}"
-                th:object="${registerRequest}">
+        <form
+              th:method="post"
+              th:action="@{/auth/register}"
+              th:object="${registerRequest}">
 
-            <label th:for="firstName">First Name</label>
+            <label for="firstName">First Name</label>
             <input type="text"
+                   id="firstName"
                    th:field="*{firstName}"
-                   th:class="${#fields.hasErrors('firstName')}? fieldError"
                    placeholder="First name"/>
-            <p class="errors alert alert-danger">
-                First name is required.
-            </p>
+            <ul>
+                <li class="bg-error" th:each="err : ${#fields.errors('firstName')}"></li>
+            </ul>
 
-            <label th:for="lastName">Last Name</label>
+            <label for="lastName">Last Name</label>
             <input type="text"
+                   id="lastName"
                    th:field="*{lastName}"
-                   class=""
                    placeholder="Last name"/>
-            <p class="errors alert alert-danger">
-                Last name is required.
-            </p>
+            <ul>
+                <li class="bg-error" th:each="err : ${#fields.errors('lastName')}"></li>
+            </ul>
 
-            <label th:for="email" class="">Email</label>
+            <label for="email" class="">Email</label>
             <input type="text"
+                   id="email"
                    th:field="*{email}"
                    placeholder="Email"/>
-            <p class="errors alert alert-danger">
-                Email is required.
-            </p>
+            <ul>
+                <li class="bg-error" th:each="err : ${#fields.errors('email')}"></li>
+            </ul>
 
-            <label th:for="password" class="">Email</label>
+            <label for="password" class="">Email</label>
             <input type="password"
+                   id="password"
                    th:field="*{password}"
                    placeholder="Password"/>
-            <p class="errors alert alert-danger">
-                Password is required.
-            </p>
+            <ul>
+                <li class="bg-error" th:each="err : ${#fields.errors('password')}"></li>
+            </ul>
 
-            <label th:for="confirmPassword" class="">Email</label>
+            <label for="confirmPassword" class="">Email</label>
             <input type="password"
+                   id="confirmPassword"
                    th:field="*{confirmPassword}"
                    placeholder="Confirm Password"/>
-            <p class="errors alert alert-danger">
-                Password is required.
-            </p>
+            <ul>
+                <li class="bg-error" th:each="err : ${#fields.errors('confirmPassword')}"></li>
+            </ul>
 
-            <div class="form" th:object="${address}">
+            <div  th:object="${address}">
 
-            <label th:for="town" class="">Address</label>
-            <input type="text"
-                   th:field="*{town}"
-                   placeholder="Town"/>
-            <p class="errors alert alert-danger">
-                Town is required.
-            </p>
+                <label for="town" class="">Address</label>
+                <input type="text"
+                       id="town"
+                       th:field="*{town}"
+                       placeholder="Town"/>
+                <ul>
+                    <li class="bg-error" th:each="err : ${#fields.errors('town')}"></li>
+                </ul>
 
-            <label th:for="street" class="">Street</label>
-            <input type="text"
-                   th:field="*{street}"
-                   placeholder="Street"/>
-            <p class="errors alert alert-danger">
-                Street is required.
-            </p>
+                <label for="street" class="">Street</label>
+                <input type="text"
+                       id="street"
+                       th:field="*{street}"
+                       placeholder="Street"/>
+                <ul>
+                    <li class="bg-error" th:each="err : ${#fields.errors('street')}"></li>
+                </ul>
 
-            <label th:for="number" class="">Number</label>
-            <input type="text"
-                   th:field="*{number}"
-                   placeholder="Number"/>
-            <p class="errors alert alert-danger">
-                Number is required.
-            </p>
+                <label for="number" class="">Number</label>
+                <input type="text"
+                       id="number"
+                       th:field="*{number}"
+                       placeholder="Number"/>
+                <ul>
+                    <li class="bg-error" th:each="err : ${#fields.errors('number')}"></li>
+                </ul>
 
             </div>
 
@@ -100,6 +111,6 @@
         </form>
     </div>
 
-</main>
+</div>
 </body>
 </html>

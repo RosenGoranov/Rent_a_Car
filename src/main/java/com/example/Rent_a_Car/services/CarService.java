@@ -12,7 +12,7 @@ public interface CarService {
 
     CarForRentDTO rent(RentCarUserModel rentCarUserModel, long id);
 
-    void create(CarRegisterDTO carRegisterDTO);
+    void addNewCar(CarRegisterDTO carRegisterDTO);
 
 
 

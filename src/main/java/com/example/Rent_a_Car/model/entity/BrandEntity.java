@@ -2,7 +2,12 @@ package com.example.Rent_a_Car.model.entity;
 
 
 import jakarta.persistence.*;
+import org.apache.catalina.User;
+import org.hibernate.mapping.Collection;
 
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -35,6 +40,10 @@ public class BrandEntity {
         return this;
     }
 
+    public BrandEntity() {
+        this.models = new ArrayList<>();
+    }
+
     public String getName() {
         return name;
     }
@@ -45,11 +54,21 @@ public class BrandEntity {
     }
 
     public List<ModelEntity> getModels() {
-        return models;
+        return Collections.unmodifiableList(this.models);
     }
 
     public BrandEntity setModels(List<ModelEntity> modelEntities) {
         this.models = modelEntities;
+        return this;
+    }
+
+    public BrandEntity addModel(ModelEntity model){
+        this.models.add(model);
+        return this;
+    }
+
+    public  BrandEntity removeModel(ModelEntity model){
+        this.models.remove(model);
         return this;
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
+
 public class CarController {
 
     private final CarService carService;
@@ -30,22 +31,4 @@ public class CarController {
         return "car-details";
     }
 
-    @GetMapping("/add-car")
-    public String addNewCar() {
-        return "add-car";
-    }
-
-    @PostMapping("/add-car")
-    public String addNewCar(@Valid CarRegisterDTO carRegisterDTO,
-                            BindingResult bindingResult,
-                            RedirectAttributes redirectAttributes) {
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("registerCar", carRegisterDTO)
-                    .addFlashAttribute("org.springframework.validation.BindingResult.registerCar", bindingResult);
-            return "redirect:/add-car";
-        }
-
-        this.carService.create(carRegisterDTO);
-        return "redirect:/";
-    }
 }

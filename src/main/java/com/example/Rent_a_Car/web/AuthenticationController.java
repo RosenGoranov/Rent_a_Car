@@ -47,7 +47,7 @@ public class AuthenticationController {
     }
 
 
-    @ModelAttribute(name = "addressDTO")
+    @ModelAttribute(name = "address")
     public AddressDTO initAddress() {
         return new AddressDTO();
     }

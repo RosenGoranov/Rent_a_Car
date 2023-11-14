@@ -1,18 +1,27 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="~{fragments/head}"></head>
 
 <body>
 
-<header th:replace="~{fragments/header}" ></header>
+<div class="container">
+    <header th:replace="~{fragments/header}"></header>
+</div>
 
-<main class="main">
-    <div class="box model">
-        <Label class="label brand">Select Brand</Label>
-        <select class="select brand">
-            <option value="">--Please choose an option--</option>
+<div class="container">
+    <section th:replace="~{fragments/banner}"></section>
+</div>
+
+<div class="container">
+    <span sec:authorize="isAnonymous()">You are not logged in, please register to receive a discount voucher. </span>
+    <span sec:authorize="isAuthenticated()" th:text="|User: ${fullName}|">User Name</span>
+    <div class="form">
+        <label for="model">Select Model</label>
+        <select id="model">
+            <option value="">--Please choose model--</option>
             <option value="">model</option>
             <option value="">model</option>
             <option value="">model</option>
@@ -20,57 +29,12 @@
             <option value="">model</option>
             <option value="">model</option>
         </select>
-    </div>
-    <div class="box">
-        <Label class="label model">Select Model</Label>
-        <select class="select model">
-            <option value="">--Please choose an option--</option>
-            <option value="">model</option>
-            <option value="">model</option>
-            <option value="">model</option>
-            <option value="">model</option>
-            <option value="">model</option>
-            <option value="">model</option>
-        </select>
-    </div>
-    <div class="box">
-        <Label class="label model">Select Fuel type</Label>
-        <select class="select model">
-            <option value="">--Please choose an option--</option>
-            <option value="">model</option>
-            <option value="">model</option>
-            <option value="">model</option>
-            <option value="">model</option>
-            <option value="">model</option>
-            <option value="">model</option>
-        </select>
-    </div>
 
-    <div class="box">
-        <Label class="label model">Select Transmission</Label>
-        <select class="select model">
-            <option value="">--Please choose an option--</option>
-            <option value="">model</option>
-            <option value="">model</option>
-            <option value="">model</option>
-            <option value="">model</option>
-            <option value="">model</option>
-            <option value="">model</option>
-        </select>
-    </div>
 
-    <div class="box">
-        <Label class="label model" id="select-model">Select Date and Time</Label>
-        <input class="select"
-               type="datetime-local"
-               id="datetime"
-               min=""
-               name="datetime"
-               required/>
     </div>
 
 
-</main>
+</div>
 
 </body>
 

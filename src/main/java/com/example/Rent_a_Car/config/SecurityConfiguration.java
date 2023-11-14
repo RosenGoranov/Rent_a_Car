@@ -35,10 +35,10 @@ public class SecurityConfiguration {
                                         .permitAll()
                                         .requestMatchers("/", "/auth/login", "/auth/register", "/auth/login-error", "rent-car")
                                         .permitAll().
-                                        requestMatchers("/user-page").hasRole(RoleEnum.USER.name()).
-                                        requestMatchers("/employee-page").hasRole(RoleEnum.EMPLOYEE.name()).
-                                        requestMatchers("/moderator-page").hasRole(RoleEnum.MODERATOR.name()).
-                                        requestMatchers("/admin-page").hasRole(RoleEnum.ADMIN.name()).
+                                        requestMatchers("/user**").hasRole(RoleEnum.USER.name()).
+                                        requestMatchers("/employee/**").hasRole(RoleEnum.EMPLOYEE.name()).
+                                        requestMatchers("/moderator/**").hasRole(RoleEnum.MODERATOR.name()).
+                                        requestMatchers("/admin/**").hasRole(RoleEnum.ADMIN.name()).
                                         anyRequest().authenticated()
                 )
                 .formLogin(
@@ -48,7 +48,7 @@ public class SecurityConfiguration {
                                         usernameParameter("email").
                                         passwordParameter("password").
                                         defaultSuccessUrl("/", true).
-                                        failureForwardUrl("/auth/login-error")
+                                        failureForwardUrl("/login-error")
                 )
                 .logout((logout) ->
                         logout.logoutUrl("/logout").
