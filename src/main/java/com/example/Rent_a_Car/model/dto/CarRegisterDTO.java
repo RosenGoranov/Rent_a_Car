@@ -2,7 +2,6 @@ package com.example.Rent_a_Car.model.dto;
 
 import com.example.Rent_a_Car.model.enums.FuelTypeEnums;
 import com.example.Rent_a_Car.model.enums.TransmissionsEnum;
-import com.example.Rent_a_Car.valodations.NotBlankEnum;
 import com.example.Rent_a_Car.valodations.NotBlankPrice;
 import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -41,6 +40,8 @@ public class CarRegisterDTO {
     @Positive
     @NotBlankPrice
     private BigDecimal rentPerDay;
+
+    private String imgURL;
 
 
     private String description;
@@ -124,5 +125,13 @@ public class CarRegisterDTO {
     public CarRegisterDTO setDescription(String description) {
         this.description = description;
         return this;
+    }
+
+    public String getImgURL() {
+        return imgURL;
+    }
+
+    public void setImgURL(String imgURL) {
+        this.imgURL = imgURL;
     }
 }
