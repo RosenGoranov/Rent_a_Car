@@ -3,16 +3,16 @@ package com.example.Rent_a_Car.config;
 
 import com.example.Rent_a_Car.model.enums.RoleEnum;
 import com.example.Rent_a_Car.repository.UserRepository;
-import com.example.Rent_a_Car.services.ApplicationUserDetailsService;
+import com.example.Rent_a_Car.utils.ApplicationUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.context.DelegatingSecurityContextRepository;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
@@ -31,36 +31,35 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(
                         authorize ->
                                 authorize.
-                                        requestMatchers("/static/**", "/css/**", "/favicon/**", "/images/**", "/js/**")
-                                        .permitAll()
-                                        .requestMatchers("/", "/auth/login", "/auth/register", "/auth/login-error", "rent-car")
+                                        requestMatchers("/css/**", "/favicon/**", "/images/**", "/js/**")
                                         .permitAll().
-                                        requestMatchers("/user**").hasRole(RoleEnum.USER.name()).
-                                        requestMatchers("/employee/**").hasRole(RoleEnum.EMPLOYEE.name()).
-                                        requestMatchers("/moderator/**").hasRole(RoleEnum.MODERATOR.name()).
-                                        requestMatchers("/admin/**").hasRole(RoleEnum.ADMIN.name()).
+                                        requestMatchers("/", "/auth/login", "/auth/register", "/auth/login-error")
+                                        .permitAll().
+                                        requestMatchers("/pages/home").hasRole(RoleEnum.USER.name()).
+                                        requestMatchers("/pages/employee").hasRole(RoleEnum.EMPLOYEE.name()).
+                                        requestMatchers("/pages/moderators").hasRole(RoleEnum.MODERATOR.name()).
+                                        requestMatchers("/pages/admins").hasRole(RoleEnum.ADMIN.name()).
                                         anyRequest().authenticated()
                 )
                 .formLogin(
                         (formLogin) ->
                                 formLogin.
-                                        loginPage("/login").
-                                        usernameParameter("email").
-                                        passwordParameter("password").
+                                        loginPage("/auth/login").
+                                        usernameParameter(
+                                                UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY).
+                                        passwordParameter(
+                                                UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY).
                                         defaultSuccessUrl("/", true).
-                                        failureForwardUrl("/login-error")
+                                        failureForwardUrl("/auth/login-error")
                 )
                 .logout((logout) ->
                         logout.logoutUrl("/logout").
                                 logoutSuccessUrl("/").
                                 invalidateHttpSession(true)
-                )
-                .securityContext(
+                ).securityContext(
                         securityContext -> securityContext.
                                 securityContextRepository(securityContextRepository)
-                )
-                .sessionManagement((session) ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS));
+                );
 
         return http.build();
 

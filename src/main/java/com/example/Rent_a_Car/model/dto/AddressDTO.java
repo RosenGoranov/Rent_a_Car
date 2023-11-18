@@ -17,6 +17,24 @@ public class AddressDTO {
     @NotBlank(message = "Town is required")
     private String number;
 
+    public AddressDTO() {
+    }
+
+    public AddressDTO(
+            String town,
+            String street,
+            String number) {
+        this.town = town;
+        this.street = street;
+        this.number = number;
+    }
+
+    public static AddressDTO builder() {
+        AddressDTO addressDTO = new AddressDTO();
+        return addressDTO;
+    }
+
+
     public String getTown() {
         return town;
     }

@@ -19,7 +19,9 @@ public class UserEntity extends BasePerson {
     @Column
     private boolean isAccountNonLocked;
 
-
+    public UserEntity() {
+        super();
+    }
 
     public boolean isAccountNonExpired() {
         return isAccountNonExpired;

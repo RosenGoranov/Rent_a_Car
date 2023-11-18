@@ -2,11 +2,7 @@ package com.example.Rent_a_Car.utils;
 
 
 import com.example.Rent_a_Car.model.entity.*;
-import com.example.Rent_a_Car.model.enums.FuelTypeEnums;
-import com.example.Rent_a_Car.model.enums.TransmissionsEnum;
-import com.example.Rent_a_Car.repository.FuelTypeRepository;
 import com.example.Rent_a_Car.repository.RoleRepository;
-import com.example.Rent_a_Car.repository.TransmissionRepository;
 import com.example.Rent_a_Car.repository.UserRepository;
 import jakarta.transaction.Transactional;
 
@@ -26,81 +22,95 @@ public class InitDB implements CommandLineRunner {
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final TransmissionRepository transmissionRepository;
-    private final FuelTypeRepository fuelTypeRepository;
 
-    public InitDB(RoleRepository roleRepository, UserRepository userRepository, PasswordEncoder passwordEncoder, TransmissionRepository transmissionRepository, FuelTypeRepository fuelTypeRepository) {
+    public InitDB(RoleRepository roleRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.transmissionRepository = transmissionRepository;
-        this.fuelTypeRepository = fuelTypeRepository;
     }
+
 
     @Override
     @Transactional
     public void run(String... args) throws Exception {
         initRole();
         initUsers();
-        initTransmission();
-        initFuelType();
-    }
 
-    private void initFuelType() {
-        if (this.fuelTypeRepository.count() == 0) {
-            this.fuelTypeRepository.saveAll(List.of(
-                    new FuelTypeEntity().setName(FuelTypeEnums.Diesel),
-                    new FuelTypeEntity().setName(FuelTypeEnums.Gasoline),
-                    new FuelTypeEntity().setName(FuelTypeEnums.Electric),
-                    new FuelTypeEntity().setName(FuelTypeEnums.Hybrid),
-                    new FuelTypeEntity().setName(FuelTypeEnums.Plug_in_hybrid)
-            ));
-        }
-    }
 
-    private void initTransmission() {
-        if (this.transmissionRepository.count() == 0) {
-            this.transmissionRepository.saveAll(List.of(
-                    new TransmissionEntity().setName(TransmissionsEnum.Automatic),
-                    new TransmissionEntity().setName(TransmissionsEnum.Manual),
-                    new TransmissionEntity().setName(TransmissionsEnum.Semi_automatic)
-            ));
-        }
     }
 
 
     private void initRole() {
         if (this.roleRepository.count() == 0) {
+            Role admin = new Role(ADMIN);
+            Role moderator = new Role(MODERATOR);
+            Role employee = new Role(EMPLOYEE);
+            Role user = new Role(USER);
 
-            this.roleRepository.saveAll(List.of(
-                    new RoleEntity(ADMIN),
-                    new RoleEntity(MODERATOR),
-                    new RoleEntity(EMPLOYEE),
-                    new RoleEntity(USER)
-            ));
-
+            this.roleRepository.save(admin);
+            this.roleRepository.save(moderator);
+            this.roleRepository.save(employee);
+            this.roleRepository.save(user);
         }
     }
 
     private void initUsers() {
         if (userRepository.count() == 0) {
-            UserEntity admin = (UserEntity) new UserEntity()
-                    .setAccountNonLocked(true)
-                    .setAccountNonExpired(true)
+            BasePerson admin = new UserEntity()
                     .setFirstName("Admin")
                     .setLastName("Admin")
-                    .setEmail("admin@example.com")
-                    .setPassword(passwordEncoder.encode("12345678"))
+                    .setEmail("admin@admin.com")
                     .setRole(this.roleRepository.findAll())
-                    .setAddress(new AddressEntity()
-                            .setTown(new TownEntity().setName("Sofia"))
-                            .setStreet("bul.Vitosha")
-                            .setNumber("1"));
+                    .setPassword(passwordEncoder.encode("testtest"))
+                    .setAddress(new Address()
+                            .setTown(new Town().setName("Sofia"))
+                            .setStreet(new Street().setName("Sofia"))
+                            .setNumber("Sofia")
+                    );
 
-            this.userRepository.save(admin);
+            this.userRepository.save((UserEntity) admin);
+
+            BasePerson moderator = new UserEntity()
+                    .setFirstName("Moderator")
+                    .setLastName("Moderator")
+                    .setEmail("moderator@moderator.com")
+                    .setRole(List.of(this.roleRepository.findByName(MODERATOR)))
+                    .setPassword(passwordEncoder.encode("testtest"))
+                    .setAddress(new Address()
+                            .setTown(new Town().setName("Sofia"))
+                            .setStreet(new Street().setName("Sofia"))
+                            .setNumber("Sofia")
+                    );
+            this.userRepository.save((UserEntity) moderator);
+
+            BasePerson employee = new UserEntity()
+                    .setFirstName("Employee")
+                    .setLastName("Employee")
+                    .setEmail("employee@employee.com")
+                    .setRole(List.of(this.roleRepository.findByName(EMPLOYEE)))
+                    .setPassword(passwordEncoder.encode("testtest"))
+                    .setAddress(new Address()
+                            .setTown(new Town().setName("Sofia"))
+                            .setStreet(new Street().setName("Sofia"))
+                            .setNumber("Sofia")
+                    );
+            this.userRepository.save((UserEntity) employee);
+
+            BasePerson normalUser = new UserEntity()
+                    .setFirstName("NormalUser")
+                    .setLastName("NormalUser")
+                    .setEmail("user@user.com")
+                    .setRole(List.of(this.roleRepository.findByName(USER)))
+                    .setPassword(passwordEncoder.encode("testtest"))
+                    .setAddress(new Address()
+                            .setTown(new Town().setName("Sofia"))
+                            .setStreet(new Street().setName("Sofia"))
+                            .setNumber("Sofia")
+                    );
+
+            this.userRepository.save((UserEntity) normalUser);
         }
     }
-
 
 }
 

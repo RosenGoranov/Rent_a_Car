@@ -4,7 +4,7 @@ import com.example.Rent_a_Car.model.auth.AuthenticationRequest;
 import com.example.Rent_a_Car.model.auth.RegisterRequest;
 import com.example.Rent_a_Car.model.dto.AddressDTO;
 import com.example.Rent_a_Car.model.dto.UserDTO;
-import com.example.Rent_a_Car.services.impl.UserService;
+import com.example.Rent_a_Car.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;

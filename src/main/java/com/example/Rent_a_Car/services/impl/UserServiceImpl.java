@@ -11,6 +11,7 @@ import com.example.Rent_a_Car.model.enums.RoleEnum;
 import com.example.Rent_a_Car.repository.RoleRepository;
 import com.example.Rent_a_Car.repository.TownRepository;
 import com.example.Rent_a_Car.repository.UserRepository;
+import com.example.Rent_a_Car.services.UserService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,8 +30,7 @@ import java.util.stream.Collectors;
 
 
 @Service
-
-public class UserService {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final TownRepository townRepository;
@@ -39,7 +39,12 @@ public class UserService {
     private final RoleRepository roleRepository;
     private final UserDetailsService userDetailsService;
 
-    public UserService(UserRepository userRepository, TownRepository townRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, RoleRepository roleRepository, UserDetailsService userDetailsService) {
+    public UserServiceImpl(UserRepository userRepository,
+                           TownRepository townRepository,
+                           ModelMapper modelMapper,
+                           PasswordEncoder passwordEncoder,
+                           RoleRepository roleRepository,
+                           UserDetailsService userDetailsService) {
         this.userRepository = userRepository;
         this.townRepository = townRepository;
         this.modelMapper = modelMapper;
@@ -49,6 +54,7 @@ public class UserService {
     }
 
 
+    @Override
     public UserDTO getByEmail(String email) throws RuntimeException {
         Optional<UserEntity> optional = this.userRepository.findByEmail(email);
         if (optional.isEmpty()) {
@@ -57,6 +63,7 @@ public class UserService {
         return modelMapper.map(optional.get(), UserDTO.class);
     }
 
+    @Override
     @Transactional
     public boolean save(RegisterRequest request, Consumer<Authentication> successfulLoginProcessor) throws RuntimeException {
         UserDTO userDTO = modelMapper.map(request, UserDTO.class);
@@ -68,7 +75,7 @@ public class UserService {
         }
         Optional<TownEntity> optionalTown = this.townRepository.findByName(
                 userDTO.getAddressDTO().getTown());
-        if (optionalTown.isEmpty()){
+        if (optionalTown.isEmpty()) {
             optionalTown.get().setName(request.getAddressDTO().getTown());
         }
 
@@ -84,9 +91,7 @@ public class UserService {
         } else {
             userEntity.setRole(new ArrayList<>(List.of(this.roleRepository.findByName(RoleEnum.USER))));
         }
-        userEntity.setAddress(new AddressEntity().setTown(optionalTown.get())
-                .setStreet(request.getAddressDTO().getStreet())
-                .setNumber(request.getAddressDTO().getNumber()));
+        userEntity.setAddress(new AddressEntity().setTown(request.getAddressDTO().getTown()));
         this.userRepository.save(userEntity);
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
 
@@ -100,6 +105,7 @@ public class UserService {
         return true;
     }
 
+    @Override
     public List<UserDTO> getUsers() {
         ModelMapper modelMapper = new ModelMapper();
         return this.userRepository
