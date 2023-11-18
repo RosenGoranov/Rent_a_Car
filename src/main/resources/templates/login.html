@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:fragment="html">
+
+<head th:replace="~{fragments/head}"><title>B</title></head>
+
+<body>
+<div class="container">
+    <header th:replace="~{fragments/header}"></header>
+</div>
+<div class="container">
+    <section th:replace="~{fragments/banner}"></section>
+</div>
+
+
+<div class="container">
+    <div class="container-form">
+
+        <h2 class="h2_register">Login</h2>
+
+
+        <p class="error" th:if="${bad_credentials}"> Invalid username or password.</p>
+
+
+        <!-- Login form start-->
+        <form class="form"
+              th:method="post"
+              th:action="@{/login}">
+
+            <label for="email">Email</label>
+            <input type="text"
+                   id="email"
+                   name="email"
+                   th:value="${email}"
+                   placeholder="Email"/>
+
+
+            <label for="password">Password</label>
+            <input id="password"
+                   name="password"
+                   type="password"
+                   placeholder="Password"/>
+
+            <div class="row">
+
+                <div class="button-holder d-flex">
+                    <input type="submit" id="authenticateButton" class="" value="LOGIN"/>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

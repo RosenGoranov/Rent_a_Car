@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="~{fragments/head}"></head>
+
+<body>
+
+<div class="container">
+    <header th:replace="~{fragments/header}"></header>
+</div>
+
+<div class="container">
+    <section th:replace="~{fragments/banner}"></section>
+</div>
+
+<div class="container">
+    <span sec:authorize="isAnonymous()">You are not logged in, please register to receive a discount voucher. </span>
+    <span sec:authorize="isAuthenticated()" th:text="|User: ${fullName}|">User Name</span>
+    <div class="form">
+        <label for="model">Select Model</label>
+        <select id="model">
+            <option value="">--Please choose model--</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+            <option value="">model</option>
+        </select>
+
+
+    </div>
+
+
+</div>
+
+</body>
+
+</html>
