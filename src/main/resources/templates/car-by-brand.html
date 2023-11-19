@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/head}">
+    <title>Best Rent sa Car Company</title>
+</head>
+
+<body>
+<div class="container">
+    <header th:replace="~{fragments/header}"></header>
+</div>
+<div class="container">
+    <section th:replace="~{fragments/banner}"></section>
+</div>
+
+<div class="container">
+    <p class="brand" th:text="*{brand}">Brand</p>
+    <div th:each="car : ${cars}" class="car-details">
+
+        <ul>
+            <li th:text="|Model: *{car.getModel()}|">Model</li>
+            <li th:text="|Transmission: *{car.getTransmissions()}|">Transmission</li>
+            <li th:text="|Fuel Tupe: *{car.getFuelType()}|">Fuel Type</li>
+            <li th:text="|Price per day: *{car.getRentPerDay()} € |">Price</li>
+        </ul>
+        <div class="media">
+            <img th:src="*{car.getImgURL()}" alt="">
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

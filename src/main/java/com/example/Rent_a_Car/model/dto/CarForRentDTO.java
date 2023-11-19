@@ -51,6 +51,7 @@ public class CarForRentDTO {
         return this;
     }
 
+
     public long getUser() {
         return user;
     }

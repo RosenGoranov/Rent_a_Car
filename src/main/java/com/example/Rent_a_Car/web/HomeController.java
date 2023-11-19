@@ -54,6 +54,8 @@ public class HomeController {
         return "index";
     }
 
+
+
     @PostMapping("/rent-car")
     public String rentACar(@Valid RentCarUserModel rentCarUserModel,
                            BindingResult bindingResult,
@@ -64,6 +66,8 @@ public class HomeController {
             redirectAttributes.addFlashAttribute("rentCar", rentCarUserModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.rentCarDTO", bindingResult);
         }
+
+
         CarForRentDTO rent = this.carService.rent(rentCarUserModel, appUserDetail.getId());
         return "redirect:/car-details";
     }

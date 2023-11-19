@@ -18,20 +18,45 @@
 <div class="container">
     <span sec:authorize="isAnonymous()">You are not logged in, please register to receive a discount voucher. </span>
     <span sec:authorize="isAuthenticated()" th:text="|User: ${fullName}|">User Name</span>
-    <div class="form">
-        <label for="model">Select Model</label>
-        <select id="model">
-            <option value="">--Please choose model--</option>
-            <option value="">model</option>
-            <option value="">model</option>
-            <option value="">model</option>
-            <option value="">model</option>
-            <option value="">model</option>
-            <option value="">model</option>
+    <form class="form"
+         th:method="POST"
+         th:action="@{/rent-car}"
+         th:object="${carForRent}">
+        <label for="modelId">Select Model</label>
+        <select id="modelId"
+                th:name="modelId">
+            <option value="">- Select a model -</option>
+            <optgroup
+                    th:each="brand: ${brands}"
+                    th:label="${brand.getName()}">
+
+                <option
+                        th:each="model : ${brand.getModel()}"
+                        th:text="${model.name}"
+                        th:value="${model.id}"
+                        th:selected="*{modelId} == ${model.id}">
+                    Model
+                </option>
+
+            </optgroup>
+        </select>
+
+        <label for="transmission">Transmission</label>
+        <select id="transmission"
+                th:name="transmission">
+            <option value="">- Select Transmission -</option>
+            <option th:each="t : ${T(com.example.Rent_a_Car.model.enums.TransmissionsEnum).values()}"
+                    th:text="${t}"
+                    th:value="${t}"
+                    th:selected="*{transmission} == ${t}">Transmission</option>
         </select>
 
 
-    </div>
+        <div class="form">
+            <input type="submit" class="button" value="Rent a Car"/>
+        </div>
+
+    </form>
 
 
 </div>

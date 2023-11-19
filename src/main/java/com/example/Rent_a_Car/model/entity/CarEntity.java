@@ -47,6 +47,8 @@ public class CarEntity {
 
     private boolean isReserved;
 
+    private String imgURL;
+
     public long getId() {
         return id;
     }
@@ -144,5 +146,13 @@ public class CarEntity {
     public CarEntity setReserved(boolean reserved) {
         isReserved = reserved;
         return this;
+    }
+
+    public String getImgURL() {
+        return imgURL;
+    }
+
+    public void setImgURL(String imgURL) {
+        this.imgURL = imgURL;
     }
 }

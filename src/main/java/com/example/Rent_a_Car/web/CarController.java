@@ -1,17 +1,18 @@
 package com.example.Rent_a_Car.web;
 
-import com.example.Rent_a_Car.model.dto.CarRegisterDTO;
+import com.example.Rent_a_Car.model.dto.CarDTO;
 import com.example.Rent_a_Car.services.CarService;
-import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-
+@RequestMapping("/cars")
 public class CarController {
 
     private final CarService carService;
@@ -20,15 +21,19 @@ public class CarController {
         this.carService = carService;
     }
 
-    @ModelAttribute("registerCar")
-    public CarRegisterDTO newCar() {
-        return new CarRegisterDTO();
+
+
+    @GetMapping("/{brand}")
+    public String getAllCarByBrand(@PathVariable String brand,
+                                   Model model,
+                                   @PageableDefault(size = 6,
+                                   sort = "rentPerDay")
+                                       Pageable pageable
+                                   ) {
+        Page<CarDTO> allCarByBrand = carService.allByBrand( brand,pageable);
+        model.addAttribute("brand",brand.toUpperCase());
+        model.addAttribute("cars",allCarByBrand);
+
+        return "car-by-brand";
     }
-
-    @GetMapping("car-details")
-    public String rentACarDetails() {
-
-        return "car-details";
-    }
-
 }

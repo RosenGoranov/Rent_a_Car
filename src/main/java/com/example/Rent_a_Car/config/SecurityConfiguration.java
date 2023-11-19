@@ -33,7 +33,7 @@ public class SecurityConfiguration {
                                 authorize.
                                         requestMatchers("/static/**", "/css/**", "/favicon/**", "/images/**", "/js/**")
                                         .permitAll()
-                                        .requestMatchers("/", "/auth/login", "/auth/register", "/auth/login-error", "rent-car")
+                                        .requestMatchers("/", "/auth/login", "/auth/register", "/auth/login-error","/cars/**")
                                         .permitAll().
                                         requestMatchers("/user**").hasRole(RoleEnum.USER.name()).
                                         requestMatchers("/employee/**").hasRole(RoleEnum.EMPLOYEE.name()).

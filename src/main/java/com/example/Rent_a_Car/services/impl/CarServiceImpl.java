@@ -1,6 +1,7 @@
 package com.example.Rent_a_Car.services.impl;
 
 
+import com.example.Rent_a_Car.model.dto.CarDTO;
 import com.example.Rent_a_Car.model.dto.CarForRentDTO;
 import com.example.Rent_a_Car.model.dto.CarRegisterDTO;
 import com.example.Rent_a_Car.model.dto.RentCarUserModel;
@@ -11,6 +12,8 @@ import com.example.Rent_a_Car.repository.*;
 import com.example.Rent_a_Car.services.CarService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -103,11 +106,11 @@ public class CarServiceImpl implements CarService {
             BrandEntity brandEntity = new BrandEntity()
                     .setName(carRegisterDTO.getBrand());
             Optional<ModelEntity> optionalModel = this.modelRepository.findByName(carRegisterDTO.getModel());
-            if (optionalModel.isPresent()){
+            if (optionalModel.isPresent()) {
                 brandEntity.addModel(optionalModel.get());
                 optionalModel.get().setBrand(brandEntity);
                 car.setModel(optionalModel.get());
-            }else {
+            } else {
                 ModelEntity model = new ModelEntity().setName(carRegisterDTO.getModel());
                 brandEntity.addModel(model);
                 model.setBrand(brandEntity);
@@ -121,5 +124,22 @@ public class CarServiceImpl implements CarService {
         this.carRepository.save(car);
     }
 
+    @Override
+    public Page<CarDTO> allByBrand(String brand,Pageable pageable) {
+
+        Page<CarDTO> cars = this.carRepository.getAllByModelBrandName(brand, pageable).map(this::mapCar);
+
+        return  cars;
+    }
+
+
+    private CarDTO mapCar(CarEntity carEntity) {
+        return new CarDTO()
+                .setModel(carEntity.getModel().getName())
+                .setTransmissions(carEntity.getTransmission().getName())
+                .setFuelType(carEntity.getFuelType().getName())
+                .setRentPerDay(carEntity.getRentPerDay())
+                .setImgURL(carEntity.getImgURL());
+    }
 
 }

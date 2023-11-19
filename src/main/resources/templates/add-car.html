@@ -85,6 +85,18 @@
                    placeholder="Price per day"/>
             <p th:if="${#fields.hasErrors('rentPerDay')}" th:errorclass="bg-error" th:errors="*{rentPerDay}"></p>
 
+            <label for="descripton">Price per day</label>
+            <input type="text"
+                   id="descripton"
+                   th:field="*{description}"
+                   placeholder="Description"/>
+
+            <label for="picture">Price per day</label>
+            <input type="text"
+                   id="picture"
+                   th:field="*{imgURL}"
+                   placeholder="Picture"/>
+
             <input type="submit" value="ADD NEW CAR">
 
         </form>
